@@ -14,7 +14,6 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        //$task = Task::all();
         $validator = Validator::make($request->all(), [
             'per_page' => ['nullable', 'in:10,20,25,50,100'],
         ]);
@@ -24,7 +23,11 @@ class TaskController extends Controller
                 'error' => $validator->errors(),
             ], 422);
         }
-        $task = Task::with('user')->paginate($request->per_page ?? 10);
+
+        $task = Task::where('user_id', auth('api')->id())
+            ->with('user')
+            ->paginate($request->per_page ?? 10);
+
         return response()->json([
             'tarefas:' => $task,
         ]);
@@ -58,7 +61,7 @@ class TaskController extends Controller
         $task = Task::create($dados);
 
         return response()->json([
-            'tarefa criada' => $task,
+            'nova_tarefa' => $task,
         ]);
     }
 
@@ -67,8 +70,9 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        $task = Task::with('user')->get();
-        $task = $task->findOrFail($id);
+        $task = Task::where('user_id', auth('api')->id())
+            ->with('user')
+            ->findOrFail($id);
 
         return response()->json([
             'tarefa selecionada:' => $task,
@@ -80,8 +84,9 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, string $id)
     {
-        $task = Task::with('user')->get();
-        $task = $task->findOrFail($id);
+        $task = Task::where('user_id', auth('api')->id())
+            ->with('user')
+            ->findOrFail($id);
 
         $task->update($request->all());
 
@@ -95,8 +100,9 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        $task = Task::with('user')->get();
-        $task = $task->findOrFail($id);
+        $task = Task::where('user_id', auth('api')->id())
+            ->with('user')
+            ->findOrFail($id);
 
         $task->delete();
 

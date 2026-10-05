@@ -6,6 +6,7 @@
                 <th class="px-4 text-center py-2">Tarefa</th>
                 <th class="px-4 text-center py-2">Status</th>
                 <th class="px-4 text-center py-2">Prioridade</th>
+                <th class="px-4 text-center py-2">Usuário</th>
                 <th class="px-4 text-center py-2">Criado em</th>
                 <th class="px-4 text-center py-2">Atualizado em</th>
             </tr>
@@ -17,12 +18,13 @@
                 <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
                 <td class="px-4 text-center py-2">{{ task.status }}</td>
                 <td class="px-4 text-center py-2">{{ task.prioridade }}</td>
+                <td class="px-4 text-center py-2">{{ task.user.name }}</td>
                 <td class="px-4 text-center py-2">{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td class="px-4 text-center py-2">{{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
             </tr>
         } @empty {
             <tr class="border-b bg-gray-800 border-gray-200 text-white">
-                <td colspan="6" class="px-4 text-center py-2">Nenhuma tarefa encontrada</td>
+                <td colspan="7" class="px-7 text-center py-2">Nenhuma tarefa encontrada</td>
             </tr>
         }
         </tbody>
