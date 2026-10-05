@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-table',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
 export class Table {
 
-  data : any[] = []
+  @Input() data : any[] = []
 
 }
