@@ -21,14 +21,26 @@ public http = inject(HttpClient);
   }
 
   createTask(task: any) {
-    return this.http.post('http://localhost:8000/api/tasks', task);
+    return this.http.post('http://localhost:8000/api/tasks', task, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 
   updateTask(task: any) {
-    return this.http.put(`http://localhost:8000/api/tasks/${task.id}`, task);
+    return this.http.put(`http://localhost:8000/api/tasks/${task.id}`, task, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 
   deleteTask(id: number) {
-    return this.http.delete(`http://localhost:8000/api/tasks/${id}`);
+    return this.http.delete(`http://localhost:8000/api/tasks/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 }

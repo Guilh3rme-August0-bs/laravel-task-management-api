@@ -3,7 +3,7 @@
   <h2 class="text-3xl text-white">
     <span class="text-red-600">Angular</span>
     +
-    <span class="text-blue-600">Laravel</span>
+    <span class="text-orange-600">Laravel</span>
   </h2>
   <app-table [data]="data()" (rowClick)="openModal($event)"></app-table>
 </div>
@@ -13,4 +13,5 @@
   [task]="selectedTask()"
   (close)="closeModal()"
   (save)="saveTask($event)"
+  (delete)="deleteTask($event)"
 ></app-modal>

@@ -81,4 +81,10 @@
 
     </div>
 </div>
+
+<app-confirm-modal 
+    [isOpen]="isConfirmDeleteOpen"
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+></app-confirm-modal>
 }

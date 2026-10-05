@@ -1,10 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Button } from '../button/button';
+import { ApiService } from '../../services/api-service';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-modal',
-  imports: [FormsModule, Button],
+  imports: [FormsModule, Button, ConfirmModal],
   templateUrl: './modal.html',
   styleUrl: './modal.css',
 })
@@ -13,9 +15,12 @@ export class Modal {
   @Input() task: any = null;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<number>();
+
+  apiService = inject(ApiService);  
 
   editMode: boolean = false;
+  isConfirmDeleteOpen: boolean = false;
 
   taskName: string = '';
   taskStatus: string = '';
@@ -48,8 +53,18 @@ export class Modal {
   }
 
   deleteTask() {
-    this.delete.emit();
+    this.isConfirmDeleteOpen = true;
+  }
+
+  confirmDelete() {
+    this.delete.emit(this.task.id);
+    console.log(this.task.id);
     this.editMode = false;
+    this.isConfirmDeleteOpen = false;
+  }
+
+  cancelDelete() {
+    this.isConfirmDeleteOpen = false;
   }
 
   saveChanges() {
@@ -62,5 +77,6 @@ export class Modal {
     };
     this.save.emit(updatedTask);
     this.editMode = false;
+    
   }
 }

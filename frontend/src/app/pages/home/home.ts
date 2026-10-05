@@ -39,7 +39,20 @@ export class Home implements OnInit {
 
   saveTask(updatedTask: any) {
     console.log('Tarefa atualizada:', updatedTask);
-    // Aqui você pode adicionar a lógica para salvar a tarefa via API
-    this.closeModal();
+    this.apiService.updateTask(updatedTask).subscribe((response: any) => {
+      console.log(response);
+      this.data.update(tasks => 
+        tasks.map(task => task.id === updatedTask.id ? updatedTask : task)
+      );
+      this.closeModal();
+    });
+  }
+
+  deleteTask(taskId: number) {
+    this.apiService.deleteTask(taskId).subscribe((response: any) => {
+      console.log(response);
+      this.data.update(tasks => tasks.filter(task => task.id !== taskId));
+      this.closeModal();
+    });
   }
 }
