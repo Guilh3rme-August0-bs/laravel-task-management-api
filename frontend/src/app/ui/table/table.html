@@ -1,1 +1,28 @@
-<p>table works!</p>
+<table class="w-full">
+    <thead class="bg-red-600 text-white">
+        <tr>
+            <th class="px-4 text-center py-2">ID</th>
+            <th class="px-4 text-center py-2">Tarefa</th>
+            <th class="px-4 text-center py-2">Status</th>
+            <th class="px-4 text-center py-2">Prioridade</th>
+            <th class="px-4 text-center py-2">Criado em</th>
+            <th class="px-4 text-center py-2">Atualizado em</th>
+        </tr>
+    </thead>
+    <tbody class="bg-gray-800 text-white text-center">
+    @for (task of data; track task.id) {   
+        <tr class="border-b border-gray-200 text-white text-center">
+            <td class="px-4 text-center py-2">{{ task.id }}</td>
+            <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
+            <td class="px-4 text-center py-2">{{ task.status }}</td>
+            <td class="px-4 text-center py-2">{{ task.prioridade }}</td>
+            <td class="px-4 text-center py-2">{{ task.created_at }}</td>
+            <td class="px-4 text-center py-2">{{ task.updated_at }}</td>
+        </tr>
+    } @empty {
+        <tr class="border-b bg-gray-800 border-gray-200 text-white">
+            <td colspan="6" class="px-4 text-center py-2">Nenhuma tarefa encontrada</td>
+        </tr>
+    }
+    </tbody>
+</table>

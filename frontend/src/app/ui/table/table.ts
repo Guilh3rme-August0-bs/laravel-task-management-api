@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table {}
+export class Table {
+
+  data : any[] = []
+
+}

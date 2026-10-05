@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-
+import { Table } from '../../ui/table/table';
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Table],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
