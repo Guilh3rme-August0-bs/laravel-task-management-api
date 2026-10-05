@@ -18,7 +18,7 @@ export class Button {
     }
 
     const variants = {
-      primary: 'bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2 rounded font-medium transition-colors cursor-pointer',
+      primary: 'bg-cyan-600 hover:bg-cyan-600 text-white px-5 py-2 rounded font-medium transition-colors cursor-pointer',
       secondary: 'bg-slate-600 hover:bg-slate-700 text-white px-5 py-2 rounded font-medium transition-colors cursor-pointer',
       danger: 'bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded font-medium transition-colors cursor-pointer',
       success: 'bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded font-medium transition-colors cursor-pointer'

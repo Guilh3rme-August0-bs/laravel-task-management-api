@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, SimpleChanges, computed } from '@angular/core';
 import { Table } from '../../ui/table/table';
 import { ApiService } from '../../services/api-service';
 import { Modal } from '../../ui/modal/modal';
@@ -15,17 +15,48 @@ export class Home implements OnInit {
   isModalOpen = signal<boolean>(false);
   selectedTask = signal<any>(null);
   mode = signal<'edit' | 'view' | 'add'>('view');
+
   public apiService = inject(ApiService);
+
+  page = signal<number>(1);
+  per_page = signal<number>(10);
   
   ngOnInit() {
-    this.apiService.getTasks().subscribe({
+    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
       next: (res: any) => {
-        this.data.set(res["tarefas:"].data);
-        console.log(this.data());
+        this.data.set(res['tarefas:'].data);
+        this.lastPage.set(res['tarefas:'].last_page);
       },
       error: (err: any) => {
         console.log(err);
-      }
+      },
+    });
+  }
+
+  prevDisabled = computed(() => this.page() > 1 ? false : true);
+  lastPage = signal<number>(0);
+  nextDisabled = computed(() => this.lastPage() === this.page() ? true : false);
+
+  nextPage() {
+    this.page.set(this.page() + 1);
+    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+      next: (res: any) => {
+        this.data.set(res['tarefas:'].data);
+        this.lastPage.set(res['tarefas:'].last_page);
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
+  previousPage() {
+    this.page.set(this.page() - 1);
+    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+      next: (res: any) => {
+        this.data.set(res['tarefas:'].data);
+        this.lastPage.set(res['tarefas:'].last_page);
+      },
     });
   }
 
@@ -41,29 +72,25 @@ export class Home implements OnInit {
   }
 
   saveTask(updatedTask: any) {
-    console.log('Tarefa atualizada:', updatedTask);
     this.apiService.updateTask(updatedTask).subscribe((response: any) => {
-      console.log(response);
-      this.data.update(tasks => 
-        tasks.map(task => task.id === updatedTask.id ? updatedTask : task)
+      this.data.update((tasks) =>
+        tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
       );
       this.closeModal();
     });
   }
 
   addTask(newTask: any) {
-    console.log('Nova tarefa:', newTask);
     this.apiService.createTask(newTask).subscribe((response: any) => {
       const createdTask = response.nova_tarefa;
-      this.data.update(tasks => [...tasks, createdTask]);
+      this.data.update((tasks) => [...tasks, createdTask]);
       this.closeModal();
     });
   }
 
   deleteTask(taskId: number) {
     this.apiService.deleteTask(taskId).subscribe((response: any) => {
-      console.log(response);
-      this.data.update(tasks => tasks.filter(task => task.id !== taskId));
+      this.data.update((tasks) => tasks.filter((task) => task.id !== taskId));
       this.closeModal();
     });
   }

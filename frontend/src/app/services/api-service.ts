@@ -12,8 +12,8 @@ public http = inject(HttpClient);
     return this.http.post('http://localhost:8000/api/login', { email, password });
   }
 
-  getTasks() {
-    return this.http.get('http://localhost:8000/api/tasks?per_page=50', {
+  getTasks(page: number = 1, per_page: number = 10) {
+    return this.http.get(`http://localhost:8000/api/tasks?per_page=${per_page}&page=${page}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }

@@ -5,8 +5,32 @@
     +
     <span class="text-orange-600">Laravel</span>
   </h2>
-  <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
-  <app-button content="Nova tarefa" variant="success" (onClick)="openModal(null, 'add')"></app-button>
+  <div class="flex gap-2 items-start justify-start h-100">
+    <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
+  </div>
+  <div class="flex gap-2 items-center">
+    <app-button
+      content="Nova tarefa"
+      variant="primary"
+      (onClick)="openModal(null, 'add')"
+    ></app-button>
+    <app-button
+      content="Anterior"
+      variant="primary"
+      [disabled]="prevDisabled()"
+      (onClick)="previousPage()"
+    ></app-button>
+    <span
+      class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center"
+      >{{ page() }}</span
+    >
+    <app-button
+      content="Próxima"
+      variant="primary"
+      [disabled]="nextDisabled()"
+      (onClick)="nextPage()"
+    ></app-button>
+  </div>
 </div>
 
 <app-modal
