@@ -1,11 +1,5 @@
 <div class="flex flex-col gap-8 items-center justify-center">
-  <h1 class="text-5xl font-semibold text-white">CRUD Task Management</h1>
-  <h2 class="text-3xl text-white">
-    <span class="text-red-600">Angular</span>
-    +
-    <span class="text-orange-600">Laravel</span>
-  </h2>
-  <div class="flex gap-2 items-start justify-start h-100">
+  <div class="flex gap-2 h-100">
     <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
   </div>
   <div class="flex gap-8 items-center">
