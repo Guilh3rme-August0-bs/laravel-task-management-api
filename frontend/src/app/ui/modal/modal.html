@@ -1,0 +1,84 @@
+@if (isOpen) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" (click)="closeModal()">
+    <div class="bg-slate-800 rounded-lg shadow-xl w-full max-w-2xl mx-4" (click)="$event.stopPropagation()">
+        <div class="flex justify-between rounded-t-lg p-6 bg-red-800 items-center mb-6">
+            <h2 class="text-2xl font-bold text-white">Detalhes da Tarefa</h2>
+            <button (click)="closeModal()" class="text-gray-400 hover:text-white text-2xl font-bold hover:cursor-pointer">
+                ×
+            </button>
+        </div>
+
+        <div class="space-y-4 p-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Nome da Tarefa</label>
+                <input 
+                    type="text" 
+                    [(ngModel)]="taskName"
+                    [disabled]="!editMode"
+                    class="w-full px-4 py-2 bg-slate-700 text-white rounded border border-slate-600 focus:border-cyan-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Status</label>
+                    <select 
+                        [(ngModel)]="taskStatus"
+                        [disabled]="!editMode"
+                        class="w-full px-4 py-2 bg-slate-700 text-white rounded border border-slate-600 focus:border-cyan-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <option value="PENDENTE">PENDENTE</option>
+                        <option value="EM_ANDAMENTO">EM_ANDAMENTO</option>
+                        <option value="CONCLUIDA">CONCLUIDA</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Prioridade</label>
+                    <select 
+                        [(ngModel)]="taskPriority"
+                        [disabled]="!editMode"
+                        class="w-full px-4 py-2 bg-slate-700 text-white rounded border border-slate-600 focus:border-cyan-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <option value="BAIXA">BAIXA</option>
+                        <option value="MEDIA">MEDIA</option>
+                        <option value="ALTA">ALTA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Descrição</label>
+                <textarea 
+                    [(ngModel)]="taskDescription"
+                    [disabled]="!editMode"
+                    rows="4"
+                    class="w-full px-4 py-2 bg-slate-700 text-white rounded border border-slate-600 focus:border-cyan-500 focus:outline-none resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                ></textarea>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+                @if (!editMode) {
+                    <app-button 
+                        content="Editar" 
+                        variant="primary"
+                        (onClick)="toggleEditMode()"
+                    ></app-button>
+                    <app-button content="Excluir" variant="danger" (onClick)="deleteTask()"></app-button>
+                } @else {
+                    <app-button 
+                        content="Cancelar" 
+                        variant="secondary"
+                        (onClick)="toggleEditMode()"
+                    ></app-button>
+                    <app-button 
+                        content="Salvar" 
+                        variant="success"
+                        (onClick)="saveChanges()"
+                    ></app-button>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+}

@@ -1,28 +1,30 @@
-<table class="w-full">
-    <thead class="bg-red-600 text-white">
-        <tr>
-            <th class="px-4 text-center py-2">ID</th>
-            <th class="px-4 text-center py-2">Tarefa</th>
-            <th class="px-4 text-center py-2">Status</th>
-            <th class="px-4 text-center py-2">Prioridade</th>
-            <th class="px-4 text-center py-2">Criado em</th>
-            <th class="px-4 text-center py-2">Atualizado em</th>
-        </tr>
-    </thead>
-    <tbody class="bg-gray-800 text-white text-center">
-    @for (task of data; track task.id) {   
-        <tr class="border-b border-gray-700 text-white text-center">
-            <td class="px-4 text-center py-2">{{ task.id }}</td>
-            <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
-            <td class="px-4 text-center py-2">{{ task.status }}</td>
-            <td class="px-4 text-center py-2">{{ task.prioridade }}</td>
-            <td class="px-4 text-center py-2">{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
-            <td class="px-4 text-center py-2">{{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
-        </tr>
-    } @empty {
-        <tr class="border-b bg-gray-800 border-gray-200 text-white">
-            <td colspan="6" class="px-4 text-center py-2">Nenhuma tarefa encontrada</td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="w-full overflow-y-auto max-h-100">
+    <table class="w-full">
+        <thead class="bg-red-800 text-white sticky top-0 z-10">
+            <tr>
+                <th class="px-4 text-center py-2">ID</th>
+                <th class="px-4 text-center py-2">Tarefa</th>
+                <th class="px-4 text-center py-2">Status</th>
+                <th class="px-4 text-center py-2">Prioridade</th>
+                <th class="px-4 text-center py-2">Criado em</th>
+                <th class="px-4 text-center py-2">Atualizado em</th>
+            </tr>
+        </thead>
+        <tbody class="bg-slate-800  text-white text-center">
+        @for (task of data; track task.id) {   
+            <tr class="text-white text-center hover:bg-[#642e2e] hover:cursor-pointer" (click)="onRowClick(task)">
+                <td class="px-4 text-center py-2">{{ task.id }}</td>
+                <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
+                <td class="px-4 text-center py-2">{{ task.status }}</td>
+                <td class="px-4 text-center py-2">{{ task.prioridade }}</td>
+                <td class="px-4 text-center py-2">{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td class="px-4 text-center py-2">{{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+        } @empty {
+            <tr class="border-b bg-gray-800 border-gray-200 text-white">
+                <td colspan="6" class="px-4 text-center py-2">Nenhuma tarefa encontrada</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

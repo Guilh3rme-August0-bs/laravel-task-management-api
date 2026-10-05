@@ -1,16 +1,18 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { Table } from '../../ui/table/table';
 import { ApiService } from '../../services/api-service';
+import { Modal } from '../../ui/modal/modal';
 
 @Component({
   selector: 'app-home',
-  imports: [Table],
+  imports: [Table, Modal],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
   data = signal<any[]>([]);
-  
+  isModalOpen = signal<boolean>(false);
+  selectedTask = signal<any>(null);
   public apiService = inject(ApiService);
   
   ngOnInit() {
@@ -23,5 +25,21 @@ export class Home implements OnInit {
         console.log(err);
       }
     });
+  }
+
+  openModal(task: any) {
+    this.selectedTask.set(task);
+    this.isModalOpen.set(true);
+  }
+
+  closeModal() {
+    this.isModalOpen.set(false);
+    this.selectedTask.set(null);
+  }
+
+  saveTask(updatedTask: any) {
+    console.log('Tarefa atualizada:', updatedTask);
+    // Aqui você pode adicionar a lógica para salvar a tarefa via API
+    this.closeModal();
   }
 }

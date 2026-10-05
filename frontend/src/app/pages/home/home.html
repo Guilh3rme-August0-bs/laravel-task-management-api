@@ -5,5 +5,12 @@
     +
     <span class="text-blue-600">Laravel</span>
   </h2>
-  <app-table [data]="data()"></app-table>
+  <app-table [data]="data()" (rowClick)="openModal($event)"></app-table>
 </div>
+
+<app-modal 
+  [isOpen]="isModalOpen()" 
+  [task]="selectedTask()"
+  (close)="closeModal()"
+  (save)="saveTask($event)"
+></app-modal>
