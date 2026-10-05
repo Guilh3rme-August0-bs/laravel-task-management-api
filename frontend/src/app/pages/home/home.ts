@@ -2,10 +2,11 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { Table } from '../../ui/table/table';
 import { ApiService } from '../../services/api-service';
 import { Modal } from '../../ui/modal/modal';
+import { Button } from '../../ui/button/button';
 
 @Component({
   selector: 'app-home',
-  imports: [Table, Modal],
+  imports: [Table, Modal, Button],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -13,6 +14,7 @@ export class Home implements OnInit {
   data = signal<any[]>([]);
   isModalOpen = signal<boolean>(false);
   selectedTask = signal<any>(null);
+  mode = signal<'edit' | 'view' | 'add'>('view');
   public apiService = inject(ApiService);
   
   ngOnInit() {
@@ -27,9 +29,10 @@ export class Home implements OnInit {
     });
   }
 
-  openModal(task: any) {
+  openModal(task: any, mode: 'edit' | 'view' | 'add') {
     this.selectedTask.set(task);
     this.isModalOpen.set(true);
+    this.mode.set(mode);
   }
 
   closeModal() {
@@ -44,6 +47,15 @@ export class Home implements OnInit {
       this.data.update(tasks => 
         tasks.map(task => task.id === updatedTask.id ? updatedTask : task)
       );
+      this.closeModal();
+    });
+  }
+
+  addTask(newTask: any) {
+    console.log('Nova tarefa:', newTask);
+    this.apiService.createTask(newTask).subscribe((response: any) => {
+      const createdTask = response.nova_tarefa;
+      this.data.update(tasks => [...tasks, createdTask]);
       this.closeModal();
     });
   }

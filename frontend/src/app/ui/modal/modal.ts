@@ -13,13 +13,14 @@ import { ConfirmModal } from '../confirm-modal/confirm-modal';
 export class Modal {
   @Input() isOpen: boolean = false;
   @Input() task: any = null;
+  @Input() mode: 'view' | 'edit' | 'add' = 'view';
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
   @Output() delete = new EventEmitter<number>();
 
   apiService = inject(ApiService);  
 
-  editMode: boolean = false;
   isConfirmDeleteOpen: boolean = false;
 
   taskName: string = '';
@@ -33,18 +34,27 @@ export class Modal {
       this.taskStatus = this.task.status || '';
       this.taskPriority = this.task.prioridade || '';
       this.taskDescription = this.task.descricao || '';
-      this.editMode = false;
+    } else if (this.mode === 'add') {
+      // Limpar campos para adicionar nova tarefa
+      this.taskName = '';
+      this.taskStatus = 'PENDENTE';
+      this.taskPriority = 'MEDIA';
+      this.taskDescription = '';
     }
   }
 
   closeModal() {
     this.close.emit();
-    this.editMode = false;
   }
 
-  toggleEditMode() {
-    this.editMode = !this.editMode;
-    if (!this.editMode) {
+  deleteTask() {
+    this.isConfirmDeleteOpen = true;
+  }
+
+  changeMode(newMode: 'view' | 'edit' | 'add') {
+    this.mode = newMode;
+    if (newMode === 'view' && this.task) {
+      // Restaurar valores originais ao cancelar edição
       this.taskName = this.task.tarefa || '';
       this.taskStatus = this.task.status || '';
       this.taskPriority = this.task.prioridade || '';
@@ -52,14 +62,9 @@ export class Modal {
     }
   }
 
-  deleteTask() {
-    this.isConfirmDeleteOpen = true;
-  }
-
   confirmDelete() {
     this.delete.emit(this.task.id);
     console.log(this.task.id);
-    this.editMode = false;
     this.isConfirmDeleteOpen = false;
   }
 
@@ -68,15 +73,21 @@ export class Modal {
   }
 
   saveChanges() {
-    const updatedTask = {
-      ...this.task,
+    const alterationData = {
       tarefa: this.taskName,
       status: this.taskStatus,
       prioridade: this.taskPriority,
       descricao: this.taskDescription
     };
-    this.save.emit(updatedTask);
-    this.editMode = false;
     
+    if (this.mode === 'add') {
+      this.add.emit(alterationData);
+    } else if (this.mode === 'edit') {
+      const updatedTask = {
+        ...this.task,
+        ...alterationData
+      };
+      this.save.emit(updatedTask);
+    }
   }
 }

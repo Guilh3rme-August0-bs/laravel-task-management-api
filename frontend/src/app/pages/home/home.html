@@ -5,13 +5,16 @@
     +
     <span class="text-orange-600">Laravel</span>
   </h2>
-  <app-table [data]="data()" (rowClick)="openModal($event)"></app-table>
+  <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
+  <app-button content="Nova tarefa" variant="success" (onClick)="openModal(null, 'add')"></app-button>
 </div>
 
-<app-modal 
-  [isOpen]="isModalOpen()" 
+<app-modal
+  [isOpen]="isModalOpen()"
   [task]="selectedTask()"
+  [mode]="mode()"
   (close)="closeModal()"
   (save)="saveTask($event)"
+  (add)="addTask($event)"
   (delete)="deleteTask($event)"
 ></app-modal>

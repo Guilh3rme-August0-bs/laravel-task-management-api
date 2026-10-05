@@ -13,7 +13,7 @@ public http = inject(HttpClient);
   }
 
   getTasks() {
-    return this.http.get('http://localhost:8000/api/tasks', {
+    return this.http.get('http://localhost:8000/api/tasks?per_page=50', {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
