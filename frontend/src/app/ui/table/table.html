@@ -12,7 +12,7 @@
         </thead>
         <tbody class="bg-slate-800  text-white text-center">
         @for (task of data; track task.id) {   
-            <tr class="text-white text-center hover:bg-[#642e2e] hover:cursor-pointer" (click)="onRowClick(task)">
+            <tr class="text-white text-center hover:bg-[#642e2e] hover:cursor-pointer" [title]="'Visualizar tarefa: ' + task.tarefa" (click)="onRowClick(task)">
                 <td class="px-4 text-center py-2">{{ task.id }}</td>
                 <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
                 <td class="px-4 text-center py-2">{{ task.status }}</td>

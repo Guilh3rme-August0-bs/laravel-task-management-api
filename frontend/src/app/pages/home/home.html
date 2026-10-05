@@ -8,28 +8,41 @@
   <div class="flex gap-2 items-start justify-start h-100">
     <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
   </div>
-  <div class="flex gap-2 items-center">
+  <div class="flex gap-8 items-center">
     <app-button
       content="Nova tarefa"
+      title="Adicionar nova tarefa"
       variant="primary"
       (onClick)="openModal(null, 'add')"
     ></app-button>
-    <app-button
-      content="Anterior"
-      variant="primary"
-      [disabled]="prevDisabled()"
-      (onClick)="previousPage()"
-    ></app-button>
-    <span
-      class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center"
-      >{{ page() }}</span
+    <div class="flex gap-1 items-center">
+      <app-button
+        content="Anterior"
+        variant="primary"
+        [disabled]="prevDisabled()"
+        (onClick)="previousPage()"
+      ></app-button>
+      <span
+        class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center"
+        >{{ page() }}</span
+      >
+      <app-button
+        content="Próxima"
+        variant="primary"
+        [disabled]="nextDisabled()"
+        (onClick)="nextPage()"
+      ></app-button>
+    </div>
+    <select
+      (change)="onChangePage($event)"
+      title="Quantidade de tarefas por página"
+      class="text-white text-lg text-center font-bold bg-gray-800 w-15 h-10 rounded-md flex justify-center items-center"
     >
-    <app-button
-      content="Próxima"
-      variant="primary"
-      [disabled]="nextDisabled()"
-      (onClick)="nextPage()"
-    ></app-button>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
   </div>
 </div>
 

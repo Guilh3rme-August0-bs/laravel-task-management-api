@@ -50,6 +50,17 @@ export class Home implements OnInit {
     });
   }
 
+  onChangePage(event: any) {
+    this.per_page.set(event.target.value);
+    this.page.set(1);
+    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+      next: (res: any) => {
+        this.data.set(res['tarefas:'].data);
+        this.lastPage.set(res['tarefas:'].last_page);
+      }
+    });
+  }
+
   previousPage() {
     this.page.set(this.page() - 1);
     this.apiService.getTasks(this.page(), this.per_page()).subscribe({
@@ -73,9 +84,11 @@ export class Home implements OnInit {
 
   saveTask(updatedTask: any) {
     this.apiService.updateTask(updatedTask).subscribe((response: any) => {
-      this.data.update((tasks) =>
-        tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
-      );
+      this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+        next: (res: any) => {
+          this.lastPage.set(res['tarefas:'].last_page);
+        },
+      });
       this.closeModal();
     });
   }
@@ -83,7 +96,12 @@ export class Home implements OnInit {
   addTask(newTask: any) {
     this.apiService.createTask(newTask).subscribe((response: any) => {
       const createdTask = response.nova_tarefa;
-      this.data.update((tasks) => [...tasks, createdTask]);
+      this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+        next: (res: any) => {
+          this.data.set(res['tarefas:'].data);
+          this.lastPage.set(res['tarefas:'].last_page);
+        },
+      });
       this.closeModal();
     });
   }
