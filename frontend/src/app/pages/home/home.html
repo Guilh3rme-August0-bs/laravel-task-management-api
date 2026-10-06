@@ -1,52 +1,39 @@
 <header class="bg-red-700 p-4 text-white text-2xl font-bold">Task Management CRUD</header>
 <div class="flex flex-col gap-8 h-[90vh] items-center justify-center">
   <div class="flex gap-2 h-100">
-    <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table>
+    <!-- <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table> -->
+    <app-table-prime [data]="data()" (rowClick)="openModal($event, 'view')"></app-table-prime>
   </div>
-  <div class="flex gap-8 items-center">
-    <app-button
-      content="Nova tarefa"
-      title="Adicionar nova tarefa"
-      variant="primary"
-      (onClick)="openModal(null, 'add')"
-    ></app-button>
+  <!-- <div class="flex gap-8 mt-10 items-center">
+    <app-button content="Nova tarefa" title="Adicionar nova tarefa" variant="primary"
+      (onClick)="openModal(null, 'add')"></app-button>
     <div class="flex gap-1 items-center">
-      <app-button
-        content="Anterior"
-        variant="primary"
-        [disabled]="prevDisabled()"
-        (onClick)="previousPage()"
-      ></app-button>
+      <app-button content="Anterior" variant="primary" [disabled]="prevDisabled()"
+        (onClick)="previousPage()"></app-button>
       <span
-        class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center"
-        >{{ page() }}</span
-      >
-      <app-button
-        content="Próxima"
-        variant="primary"
-        [disabled]="nextDisabled()"
-        (onClick)="nextPage()"
-      ></app-button>
+        class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center">{{
+        page() }}</span>
+      <app-button content="Próxima" variant="primary" [disabled]="nextDisabled()" (onClick)="nextPage()"></app-button>
     </div>
-    <select
-      (change)="onChangePage($event)"
-      title="Quantidade de tarefas por página"
-      class="text-white text-lg text-center font-bold bg-gray-800 w-15 h-10 rounded-md flex justify-center items-center"
-    >
+    <select (change)="onChangePage($event)" title="Quantidade de tarefas por página"
+      class="text-white text-lg text-center font-bold bg-gray-800 w-15 h-10 rounded-md flex justify-center items-center">
       <option value="10">10</option>
       <option value="20">20</option>
       <option value="50">50</option>
       <option value="100">100</option>
     </select>
+  </div> -->
+
+  <div class="flex mt-10 items-center justify-end gap-2">
+    <span class="text-white">Itens por página: </span>
+    <p-select [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+      (ngModelChange)="first2 = 0" />
+    <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="totalRecords()" (onPageChange)="onPageChange2($event)"
+      [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords}"
+      [showPageLinks]="false" [showFirstLastIcon]="false"></p-paginator>
   </div>
+
 </div>
 
-<app-modal
-  [isOpen]="isModalOpen()"
-  [task]="selectedTask()"
-  [mode]="mode()"
-  (close)="closeModal()"
-  (save)="saveTask($event)"
-  (add)="addTask($event)"
-  (delete)="deleteTask($event)"
-></app-modal>
+<app-modal [isOpen]="isModalOpen()" [task]="selectedTask()" [mode]="mode()" (close)="closeModal()"
+  (save)="saveTask($event)" (add)="addTask($event)" (delete)="deleteTask($event)"></app-modal>
