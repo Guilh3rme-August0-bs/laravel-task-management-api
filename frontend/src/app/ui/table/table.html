@@ -17,7 +17,7 @@
                 <td class="px-4 text-center py-2">{{ task.id }}</td>
                 <td class="px-4 text-center py-2">{{ task.tarefa }}</td>
                 <td class="px-4 text-center py-2">{{ task.status }}</td>
-                <td class="px-4 text-center py-2">{{ task.prioridade }}</td>
+                <td [class]="colorPriority(task.prioridade)">{{ task.prioridade }}</td>
                 <td class="px-4 text-center py-2">{{ task.user.name }}</td>
                 <td class="px-4 text-center py-2">{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td class="px-4 text-center py-2">{{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>

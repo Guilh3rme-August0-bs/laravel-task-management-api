@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { ApiService } from '../../services/api-service';
 import { Router } from '@angular/router';
 import { Loading } from '../../ui/loading/loading';
+import { NotificationService } from '../../services/notification-service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class Login {
   loading = signal(false);
   apiService = inject(ApiService);
   router = inject(Router);
+  notificationService = inject(NotificationService);
   
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,17 +31,19 @@ export class Login {
      .subscribe({
        next: (res: any) => {
           localStorage.setItem('token', res.token);
+          this.notificationService.success('Login realizado com sucesso!');
           this.router.navigate(['/home']);
         },
         error: () => {
-          alert('Erro ao fazer login');
+          this.notificationService.error('Erro ao fazer login. Verifique suas credenciais.');
+          this.loading.set(false);
         },
         complete: () => {
           this.loading.set(false);
         },
       })
    } else {
-     alert('Formulário inválido');
+     this.notificationService.warning('Por favor, preencha todos os campos corretamente.');
     }
   }
 }

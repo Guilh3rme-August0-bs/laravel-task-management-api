@@ -45,6 +45,9 @@ export class Modal {
 
   closeModal() {
     this.close.emit();
+    this.mode === 'add' 
+    ? this.mode = 'add' 
+    : this.mode = 'view';
   }
 
   deleteTask() {

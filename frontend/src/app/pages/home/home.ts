@@ -3,10 +3,12 @@ import { Table } from '../../ui/table/table';
 import { ApiService } from '../../services/api-service';
 import { Modal } from '../../ui/modal/modal';
 import { Button } from '../../ui/button/button';
+import { Notification } from '../../ui/notification/notification';
+import { NotificationService } from '../../services/notification-service';
 
 @Component({
   selector: 'app-home',
-  imports: [Table, Modal, Button],
+  imports: [Table, Modal, Button, Notification],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -17,6 +19,7 @@ export class Home implements OnInit {
   mode = signal<'edit' | 'view' | 'add'>('view');
 
   public apiService = inject(ApiService);
+  private notificationService = inject(NotificationService);
 
   page = signal<number>(1);
   per_page = signal<number>(10);
@@ -29,6 +32,7 @@ export class Home implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
+        this.notificationService.error('Erro ao carregar tarefas.');
       },
     });
   }
@@ -46,6 +50,7 @@ export class Home implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
+        this.notificationService.error('Erro ao carregar próxima página.');
       },
     });
   }
@@ -57,6 +62,10 @@ export class Home implements OnInit {
       next: (res: any) => {
         this.data.set(res['tarefas:'].data);
         this.lastPage.set(res['tarefas:'].last_page);
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao alterar itens por página.');
       }
     });
   }
@@ -67,6 +76,10 @@ export class Home implements OnInit {
       next: (res: any) => {
         this.data.set(res['tarefas:'].data);
         this.lastPage.set(res['tarefas:'].last_page);
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao carregar página anterior.');
       },
     });
   }
@@ -83,33 +96,55 @@ export class Home implements OnInit {
   }
 
   saveTask(updatedTask: any) {
-    this.apiService.updateTask(updatedTask).subscribe((response: any) => {
-      this.apiService.getTasks(this.page(), this.per_page()).subscribe({
-        next: (res: any) => {
-          this.lastPage.set(res['tarefas:'].last_page);
-        },
-      });
-      this.closeModal();
+    this.apiService.updateTask(updatedTask).subscribe({
+      next: (response: any) => {
+        this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+          next: (res: any) => {
+            this.data.set(res['tarefas:'].data);
+            this.lastPage.set(res['tarefas:'].last_page);
+          },
+        });
+        this.notificationService.success('Tarefa atualizada com sucesso!');
+        this.closeModal();
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao atualizar tarefa.');
+      }
     });
   }
 
   addTask(newTask: any) {
-    this.apiService.createTask(newTask).subscribe((response: any) => {
-      const createdTask = response.nova_tarefa;
-      this.apiService.getTasks(this.page(), this.per_page()).subscribe({
-        next: (res: any) => {
-          this.data.set(res['tarefas:'].data);
-          this.lastPage.set(res['tarefas:'].last_page);
-        },
-      });
-      this.closeModal();
+    this.apiService.createTask(newTask).subscribe({
+      next: (response: any) => {
+        const createdTask = response.nova_tarefa;
+        this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+          next: (res: any) => {
+            this.data.set(res['tarefas:'].data);
+            this.lastPage.set(res['tarefas:'].last_page);
+          },
+        });
+        this.notificationService.success('Tarefa criada com sucesso!');
+        this.closeModal();
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao criar tarefa.');
+      }
     });
   }
 
   deleteTask(taskId: number) {
-    this.apiService.deleteTask(taskId).subscribe((response: any) => {
-      this.data.update((tasks) => tasks.filter((task) => task.id !== taskId));
-      this.closeModal();
+    this.apiService.deleteTask(taskId).subscribe({
+      next: (response: any) => {
+        this.data.update((tasks) => tasks.filter((task) => task.id !== taskId));
+        this.notificationService.success('Tarefa excluída com sucesso!');
+        this.closeModal();
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao excluir tarefa.');
+      }
     });
   }
 }

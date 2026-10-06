@@ -1,0 +1,15 @@
+<div
+  class="flex items-center gap-3 rounded-md border-l-4 bg-gray-50 px-4 py-3 shadow-md min-w-[300px] max-w-md {{ containerClasses }}"
+  role="alert"
+>
+  <fa-icon [icon]="resolvedIcon" class="mt-0.5 text-lg shrink-0"></fa-icon>
+  <p class="flex-1 text-sm font-medium leading-snug">{{ text }}</p>
+  <button
+    type="button"
+    (click)="close.emit()"
+    class="shrink-0 cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
+    aria-label="Fechar notificação"
+  >
+    <fa-icon [icon]="faXmark"></fa-icon>
+  </button>
+</div>
