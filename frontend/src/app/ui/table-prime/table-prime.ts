@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { Button } from '../button/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,6 +14,7 @@ import { NotificationService } from '../../services/notification-service';
 @Component({
   selector: 'app-table-prime',
   imports: [
+    Button,
     DatePipe, 
     TableModule, 
     FormsModule, 
