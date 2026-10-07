@@ -87,6 +87,7 @@
                         content="Salvar" 
                         severity="success"
                         (onClick)="saveChanges()"
+                        [disabled]="taskName === '' || taskStatus === '' || taskPriority === '' || taskName === null || taskStatus === null || taskPriority === null || taskDescription === null"
                     ></app-button>
                 }
             </div>

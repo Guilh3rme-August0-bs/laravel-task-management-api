@@ -18,6 +18,13 @@ class TaskController extends Controller
             'per_page' => ['nullable', 'in:10,20,25,50,100'],
             'sort_by' => ['nullable', 'string', 'in:id,tarefa,descricao,status,prioridade,created_at,updated_at,user.name'],
             'sort_order' => ['nullable', 'string', 'in:asc,desc'],
+            'filter_id' => ['nullable', 'integer'],
+            'filter_tarefa' => ['nullable', 'string'],
+            'filter_status' => ['nullable', 'string', 'in:PENDENTE,EM_ANDAMENTO,CONCLUIDA'],
+            'filter_prioridade' => ['nullable', 'string', 'in:BAIXA,MEDIA,ALTA'],
+            'filter_usuario' => ['nullable', 'string'],
+            'filter_criado_em' => ['nullable', 'date'],
+            'filter_atualizado_em' => ['nullable', 'date'],
         ]);
 
         if ($validator->fails()) {
@@ -29,6 +36,32 @@ class TaskController extends Controller
         $query = Task::where('user_id', auth('api')->id())
             ->with('user');
 
+        // Aplicar filtros
+        if ($request->filled('filter_id')) {
+            $query->where('id', $request->filter_id);
+        }
+
+        if ($request->filled('filter_tarefa')) {
+            $query->where('tarefa', 'like', '%'.$request->filter_tarefa.'%');
+        }
+
+        if ($request->filled('filter_status')) {
+            $query->where('status', $request->filter_status);
+        }
+
+        if ($request->filled('filter_prioridade')) {
+            $query->where('prioridade', $request->filter_prioridade);
+        }
+
+        if ($request->filled('filter_criado_em')) {
+            $query->whereDate('created_at', $request->filter_criado_em);
+        }
+
+        if ($request->filled('filter_atualizado_em')) {
+            $query->whereDate('updated_at', $request->filter_atualizado_em);
+        }
+
+        // Aplicar ordenação
         if ($request->has('sort_by') && $request->has('sort_order')) {
             $sortBy = $request->sort_by;
             $sortOrder = $request->sort_order;

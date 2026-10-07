@@ -1,0 +1,20 @@
+.filter-grid {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    align-items: center;
+}
+
+.filter-cell {
+    padding: 0 0.5rem;
+    flex-shrink: 0;
+}
+
+.filter-cell:first-child {
+    padding-left: 0;
+}
+
+.filter-cell:last-child {
+    padding-right: 0;
+    margin-left: auto;
+}
