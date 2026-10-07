@@ -1,33 +1,96 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, inject, signal, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
+import { ApiService } from '../../services/api-service';
+import { NotificationService } from '../../services/notification-service';
 
 @Component({
   selector: 'app-table-prime',
-  imports: [DatePipe, TableModule],
+  imports: [
+    DatePipe, 
+    TableModule, 
+    FormsModule, 
+    ButtonModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    TagModule
+  ],
   templateUrl: './table-prime.html',
   styleUrl: './table-prime.css',
 })
-export class TablePrime {
+export class TablePrime implements OnInit {
 
-  @Input() data : any[] = []
   @Output() rowClick = new EventEmitter<any>();
+
+  data = signal<any[]>([]);
+  totalRecords = signal<number>(0);
+  loading = signal<boolean>(false);
+  searchValue: string = '';
+  
+  page = signal<number>(1);
+  per_page = signal<number>(10);
+
+  private apiService = inject(ApiService);
+  private notificationService = inject(NotificationService);
+
+  ngOnInit() {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    this.loading.set(true);
+    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+      next: (res: any) => {
+        this.data.set(res['tarefas:'].data);
+        this.totalRecords.set(res['tarefas:'].total);
+        this.loading.set(false);
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.notificationService.error('Erro ao carregar tarefas.');
+        this.loading.set(false);
+      },
+    });
+  }
+
+  onPageChange(event: any) {
+    const newPage = Math.floor(event.first / event.rows) + 1;
+    this.page.set(newPage);
+    this.per_page.set(event.rows);
+    this.loadTasks();
+  }
 
   onRowClick(task: any) {
     this.rowClick.emit(task);
   }
 
-  colorPriority(priority: any) {
+  clear(table: any) {
+    table.clear();
+    this.searchValue = '';
+  }
+
+  getSeverityPriority(priority: string) {
     switch (priority) {
       case 'BAIXA':
-        return 'text-green-500 px-4 text-center py-2';
+        return 'success';
       case 'MEDIA':
-        return 'text-yellow-500 px-4 text-center py-2';
+        return 'warn';
       case 'ALTA':
-        return 'text-red-500 px-4 text-center py-2';
+        return 'danger';
       default:
-        return 'text-gray-500 px-4 text-center py-2';
+        return 'secondary';
     }
+  }
+
+  refreshData() {
+    this.loadTasks();
   }
 
 }

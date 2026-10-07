@@ -16,6 +16,8 @@ class TaskController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'per_page' => ['nullable', 'in:10,20,25,50,100'],
+            'sort_by' => ['nullable', 'string', 'in:id,tarefa,descricao,status,prioridade,created_at,updated_at,user.name'],
+            'sort_order' => ['nullable', 'string', 'in:asc,desc'],
         ]);
 
         if ($validator->fails()) {
@@ -24,9 +26,24 @@ class TaskController extends Controller
             ], 422);
         }
 
-        $task = Task::where('user_id', auth('api')->id())
-            ->with('user')
-            ->paginate($request->per_page ?? 10);
+        $query = Task::where('user_id', auth('api')->id())
+            ->with('user');
+
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            $sortBy = $request->sort_by;
+            $sortOrder = $request->sort_order;
+
+            // Para campos relacionados (user.name)
+            if ($sortBy === 'user.name') {
+                $query->join('users', 'tasks.user_id', '=', 'users.id')
+                    ->orderBy('users.name', $sortOrder)
+                    ->select('tasks.*');
+            } else {
+                $query->orderBy($sortBy, $sortOrder);
+            }
+        }
+
+        $task = $query->paginate($request->per_page ?? 10);
 
         return response()->json([
             'tarefas:' => $task,

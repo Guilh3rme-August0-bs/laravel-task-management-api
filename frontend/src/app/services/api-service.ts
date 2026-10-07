@@ -12,8 +12,12 @@ public http = inject(HttpClient);
     return this.http.post('http://localhost:8000/api/login', { email, password });
   }
 
-  getTasks(page: number = 1, per_page: number = 10) {
-    return this.http.get(`http://localhost:8000/api/tasks?per_page=${per_page}&page=${page}`, {
+  getTasks(page: number, perPage: number, sortField?: string, sortOrder?: string) {
+    let params = `?page=${page}&per_page=${perPage}`;
+    if (sortField && sortOrder) {
+      params += `&sort_by=${sortField}&sort_order=${sortOrder}`;
+    }
+    return this.http.get(`http://localhost:8000/api/tasks${params}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
