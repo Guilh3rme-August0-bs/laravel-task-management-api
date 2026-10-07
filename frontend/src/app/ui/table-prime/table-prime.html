@@ -18,9 +18,8 @@
     [loading]="loading()"
 >
     <ng-template pTemplate="caption">
-        <div class="flex justify-content-around">
+        <div class="flex flex-row gap-3 w-full">
             <ng-content select="[caption-left]"></ng-content>
-            <p-button [outlined]="true" icon="pi pi-filter-slash" label="Limpar" (onClick)="clear(dt)" />
         </div>
     </ng-template>
     <ng-template pTemplate="header">

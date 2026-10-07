@@ -31,11 +31,12 @@ export class TablePrime implements OnInit {
 
   data = signal<any[]>([]);
   totalRecords = signal<number>(0);
-  loading = signal<boolean>(false);
-  searchValue: string = '';
+  loading = signal<boolean>(false); 
   
   page = signal<number>(1);
   per_page = signal<number>(10);
+  sort_field = signal<string | undefined>(undefined);
+  sort_order = signal<string | undefined>(undefined);
 
   private apiService = inject(ApiService);
   private notificationService = inject(NotificationService);
@@ -46,7 +47,12 @@ export class TablePrime implements OnInit {
 
   loadTasks() {
     this.loading.set(true);
-    this.apiService.getTasks(this.page(), this.per_page()).subscribe({
+    this.apiService.getTasks(
+      this.page(), 
+      this.per_page(), 
+      this.sort_field(), 
+      this.sort_order()
+    ).subscribe({
       next: (res: any) => {
         this.data.set(res['tarefas:'].data);
         this.totalRecords.set(res['tarefas:'].total);
@@ -64,16 +70,18 @@ export class TablePrime implements OnInit {
     const newPage = Math.floor(event.first / event.rows) + 1;
     this.page.set(newPage);
     this.per_page.set(event.rows);
+    
+    // Captura ordenação se existir no evento
+    if (event.sortField) {
+      this.sort_field.set(event.sortField);
+      this.sort_order.set(event.sortOrder === 1 ? 'asc' : 'desc');
+    }
+    
     this.loadTasks();
   }
 
   onRowClick(task: any) {
     this.rowClick.emit(task);
-  }
-
-  clear(table: any) {
-    table.clear();
-    this.searchValue = '';
   }
 
   getSeverityPriority(priority: string) {
