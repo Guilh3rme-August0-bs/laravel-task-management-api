@@ -5,10 +5,12 @@ import { ApiService } from '../../services/api-service';
 import { Router } from '@angular/router';
 import { Loading } from '../../ui/loading/loading';
 import { NotificationService } from '../../services/notification-service';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-login',
-  imports: [Button, ReactiveFormsModule, Loading],
+  imports: [Button, ReactiveFormsModule, Loading, PasswordModule, InputTextModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

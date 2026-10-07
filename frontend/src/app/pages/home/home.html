@@ -1,4 +1,4 @@
-<header class="bg-red-700 p-4 text-white text-2xl font-bold">Task Management CRUD</header>
+<header class="bg-red-900 p-4 text-white text-2xl font-bold">Task Management CRUD</header>
 <div class="flex flex-col gap-8 h-[90vh] items-center justify-center">
   <div class="flex gap-2 h-100">
     <!-- <app-table [data]="data()" (rowClick)="openModal($event, 'view')"></app-table> -->
@@ -22,9 +22,7 @@
     </select>
   </div> -->
 
-  
-  
-  <div class="flex mt-10 items-center justify-end gap-2">
+  <p-toolbar class="mt-10">
     <app-button content="Nova tarefa" title="Adicionar nova tarefa" severity="contrast"
       (onClick)="openModal(null, 'add')"></app-button>
     <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="totalRecords()" (onPageChange)="onPageChange2($event)"
@@ -32,8 +30,7 @@
     [showPageLinks]="false" [showFirstLastIcon]="false"></p-paginator>
     <p-select [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
       (ngModelChange)="first2 = 0" />
-
-  </div>
+  </p-toolbar>
 
 </div>
 

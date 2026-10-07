@@ -6,11 +6,12 @@ import { Button } from '../../ui/button/button';
 import { NotificationService } from '../../services/notification-service';
 import { TablePrime } from '../../ui/table-prime/table-prime';
 import { PaginatorModule } from 'primeng/paginator';
+import { ToolbarModule } from 'primeng/toolbar';
 import { Select } from 'primeng/select';
 
 @Component({
   selector: 'app-home',
-  imports: [TablePrime, Modal, Button, FormsModule, PaginatorModule, Select],
+  imports: [TablePrime, Modal, Button, FormsModule, PaginatorModule, Select, ToolbarModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
