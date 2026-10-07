@@ -69,23 +69,23 @@
                 @if (mode === 'view') {
                     <app-button 
                         content="Editar" 
-                        variant="primary"
                         (onClick)="changeMode('edit')"
+                        severity="info"
                     ></app-button>
                     <app-button 
                         content="Excluir" 
-                        variant="danger" 
+                        severity="danger" 
                         (onClick)="deleteTask()"
                     ></app-button>
                 } @else {
                     <app-button 
                         content="Cancelar" 
-                        variant="secondary"
+                        severity="secondary"
                         (onClick)="mode === 'add' ? closeModal() : changeMode('view')"
                     ></app-button>
                     <app-button 
                         content="Salvar" 
-                        variant="success"
+                        severity="success"
                         (onClick)="saveChanges()"
                     ></app-button>
                 }

@@ -5,17 +5,15 @@
     <app-table-prime [data]="data()" (rowClick)="openModal($event, 'view')"></app-table-prime>
   </div>
   <!-- <div class="flex gap-8 mt-10 items-center">
-    <app-button content="Nova tarefa" title="Adicionar nova tarefa" variant="primary"
-      (onClick)="openModal(null, 'add')"></app-button>
     <div class="flex gap-1 items-center">
       <app-button content="Anterior" variant="primary" [disabled]="prevDisabled()"
-        (onClick)="previousPage()"></app-button>
+      (onClick)="previousPage()"></app-button>
       <span
-        class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center">{{
+      class="text-white text-lg text-center font-bold bg-gray-800 w-10 h-10 rounded-md flex justify-center items-center">{{
         page() }}</span>
-      <app-button content="Próxima" variant="primary" [disabled]="nextDisabled()" (onClick)="nextPage()"></app-button>
-    </div>
-    <select (change)="onChangePage($event)" title="Quantidade de tarefas por página"
+        <app-button content="Próxima" variant="primary" [disabled]="nextDisabled()" (onClick)="nextPage()"></app-button>
+      </div>
+      <select (change)="onChangePage($event)" title="Quantidade de tarefas por página"
       class="text-white text-lg text-center font-bold bg-gray-800 w-15 h-10 rounded-md flex justify-center items-center">
       <option value="10">10</option>
       <option value="20">20</option>
@@ -24,13 +22,17 @@
     </select>
   </div> -->
 
+  
+  
   <div class="flex mt-10 items-center justify-end gap-2">
-    <span class="text-white">Itens por página: </span>
+    <app-button content="Nova tarefa" title="Adicionar nova tarefa" severity="contrast"
+      (onClick)="openModal(null, 'add')"></app-button>
+    <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="totalRecords()" (onPageChange)="onPageChange2($event)"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords}"
+    [showPageLinks]="false" [showFirstLastIcon]="false"></p-paginator>
     <p-select [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
       (ngModelChange)="first2 = 0" />
-    <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="totalRecords()" (onPageChange)="onPageChange2($event)"
-      [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords}"
-      [showPageLinks]="false" [showFirstLastIcon]="false"></p-paginator>
+
   </div>
 
 </div>

@@ -1,10 +1,8 @@
 import { Component, inject, signal, OnInit, SimpleChanges, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Table } from '../../ui/table/table';
 import { ApiService } from '../../services/api-service';
 import { Modal } from '../../ui/modal/modal';
 import { Button } from '../../ui/button/button';
-import { Notification } from '../../ui/notification/notification';
 import { NotificationService } from '../../services/notification-service';
 import { TablePrime } from '../../ui/table-prime/table-prime';
 import { PaginatorModule } from 'primeng/paginator';
@@ -12,7 +10,7 @@ import { Select } from 'primeng/select';
 
 @Component({
   selector: 'app-home',
-  imports: [Table, TablePrime, Modal, Button, Notification, FormsModule, PaginatorModule, Select],
+  imports: [TablePrime, Modal, Button, FormsModule, PaginatorModule, Select],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

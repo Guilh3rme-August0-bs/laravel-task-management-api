@@ -1,1 +1,11 @@
-<button [class]="buttonStyle" (click)="onClick.emit()" [disabled]="disabled">{{ content }}</button>
+<!--<button [class]="buttonStyle" (click)="onClick.emit()" [disabled]="disabled">{{ content }}</button>-->
+<div class="card flex justify-content-center">
+    <p-button [label]="content" 
+    icon="pi pi-plus" 
+    [severity]="severity" 
+    (click)="onClick.emit()" 
+    [icon]="icon" 
+    [disabled]="disabled" 
+    [outlined]="true" 
+    iconPos="right" />
+  </div>
