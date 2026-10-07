@@ -1,0 +1,138 @@
+<div class="filter-grid mb-1 bg-zinc-900 p-4 rounded-t-md">
+    <div class="filter-cell flex flex-col" style="min-width: 2rem">
+        <label for="id">ID</label>
+        <input pInputText id="id" [(ngModel)]="filters.id" />
+    </div>
+    <div class="filter-cell flex flex-col" style="min-width: 14rem">
+        <label for="tarefa">Tarefa</label>
+        <input pInputText id="tarefa" [(ngModel)]="filters.tarefa" />
+    </div>
+    <div class="filter-cell flex flex-col" style="min-width: 10rem">
+        <label for="status">Status</label>
+        <p-select id="status" [(ngModel)]="filters.status" [options]="statusOptions" placeholder="Selecione" [showClear]="true" class="w-full" />
+    </div>
+    <div class="filter-cell flex flex-col" style="min-width: 10rem">
+        <label for="prioridade">Prioridade</label>
+        <p-select id="prioridade" [(ngModel)]="filters.prioridade" [options]="prioridadeOptions" placeholder="Selecione" [showClear]="true" class="w-full" />
+    </div>
+    <div class="filter-cell flex flex-col" style="min-width: 12rem">
+        <label for="criado_em">Criado em</label>
+        <p-datepicker id="criado_em" [(ngModel)]="filters.criado_em" dateFormat="dd/mm/yy" [showIcon]="true" placeholder="Selecione uma data" class="w-full" />
+    </div>
+    <div class="filter-cell flex flex-col" style="min-width: 12rem">
+        <label for="atualizado_em">Atualizado em</label>
+        <p-datepicker id="atualizado_em" [(ngModel)]="filters.atualizado_em" dateFormat="dd/mm/yy" [showIcon]="true" placeholder="Selecione uma data" class="w-full" />
+    </div>
+    <div class="flex justify-end mt-6">
+        <p-button icon="pi pi-filter" label="Filtrar" severity="primary" (onClick)="applyFilters()" />
+    </div>
+</div>
+
+<p-table #dt [value]="data()" 
+    dataKey="id" [rowHover]="true" 
+    [scrollHeight]="'500px'" 
+    [rows]="10" 
+    [scrollable]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [totalRecords]="totalRecords()" 
+    [showCurrentPageReport]="true" 
+    [paginator]="true" 
+    [lazy]="true"
+    (onLazyLoad)="onPageChange($event)" 
+    currentPageReportTemplate="{first} - {last} de {totalRecords} tarefas"
+    [filterDelay]="0" 
+    [globalFilterFields]="['id', 'tarefa', 'status', 'prioridade', 'user.name']"
+    [rowsPerPageOptions]="[10, 20, 50, 100]" 
+    [loading]="loading()">
+    <ng-template pTemplate="caption">
+        <div class="flex justify-between align-items-center">
+            <ng-content select="[caption-left]"></ng-content>
+            <p-button [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt)" label="Limpar" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="id" style="min-width: 5rem">
+                <div class="flex justify-content-between align-items-center">
+                    ID
+                    <p-sortIcon field="id" />
+                </div>
+            </th>
+            <th pSortableColumn="tarefa" style="min-width: 14rem">
+                <div class="flex justify-content-between align-items-center">
+                    Tarefa
+                    <p-sortIcon field="tarefa" />
+                </div>
+            </th>
+            <th pSortableColumn="status" style="min-width: 10rem">
+                <div class="flex justify-content-between align-items-center">
+                    Status
+                    <p-sortIcon field="status" />
+                </div>
+            </th>
+            <th pSortableColumn="prioridade" style="min-width: 10rem">
+                <div class="flex justify-content-between align-items-center">
+                    Prioridade
+                    <p-sortIcon field="prioridade" />
+                </div>
+            </th>
+            <th style="min-width: 12rem">
+                Usuário
+            </th>
+            <th pSortableColumn="created_at" style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Criado em
+                    <p-sortIcon field="created_at" />
+                </div>
+            </th>
+            <th pSortableColumn="updated_at" style="min-width: 12rem">
+                <div class="flex justify-content-between align-items-center">
+                    Atualizado em
+                    <p-sortIcon field="updated_at" />
+                </div>
+            </th>
+            <th>
+                <div class="flex justify-center align-items-center">
+                    Ação
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-task>
+        <tr class="p-selectable-row">
+            <td>
+
+                {{ task.id }}
+            </td>
+            <td>
+
+                {{ task.tarefa }}
+            </td>
+            <td>
+
+                {{ task.status }}
+            </td>
+            <td>
+                <p-tag [value]="task.prioridade" [severity]="getSeverityPriority(task.prioridade)" />
+            </td>
+            <td>
+                {{ task.user.name }}
+            </td>
+            <td>
+                {{ task.created_at | date:'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td>
+                {{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td>
+                <app-button content="Visualizar" severity="info" icon="pi pi-eye"
+                    (onClick)="onRowClick(task)"></app-button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7" class="text-center">Nenhuma tarefa encontrada.</td>
+        </tr>
+    </ng-template>
+</p-table>

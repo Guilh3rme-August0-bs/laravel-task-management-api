@@ -1,18 +1,18 @@
 @if (isOpen) {
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-    <div class="bg-slate-800 border border-slate-700 rounded-lg shadow-xl w-full max-w-md mx-4 p-6">
+    <div class="bg-zinc-800 border border-stone-700 rounded-lg shadow-xl w-full max-w-md mx-4 p-6">
       <h3 class="text-xl font-semibold text-white mb-3">Confirmar Exclusão</h3>
       <p class="text-slate-300 mb-6">Tem certeza que deseja excluir esta tarefa? Esta ação não pode ser desfeita.</p>
       
       <div class="flex gap-3 justify-end">
         <app-button
           content="Cancelar"
-          variant="secondary"
+          severity="secondary"
           (onClick)="onCancel()"
         ></app-button>
         <app-button
           content="Excluir"
-          variant="danger"
+          severity="danger"
           (onClick)="onConfirm()"
         ></app-button>
       </div>

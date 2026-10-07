@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Button } from '../button/button';
 import { ApiService } from '../../services/api-service';
 import { ConfirmModal } from '../confirm-modal/confirm-modal';
+import { SelectModule } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-modal',
-  imports: [FormsModule, Button, ConfirmModal],
+  imports: [FormsModule, Button, ConfirmModal, SelectModule, InputTextModule],
   templateUrl: './modal.html',
   styleUrl: './modal.css',
 })
