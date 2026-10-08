@@ -8,7 +8,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-21-2C3E50?style=for-the-badge&logo=primeng&logoColor=white)
 
-API RESTful para gerenciamento de tarefas, com autenticação OAuth2 via Laravel Passport. Este pacote é o **backend** de um monorepo cujo frontend (Angular + PrimeNG) vive em [`../frontend`](../frontend). Toda a comunicação entre as duas pontas passa por JSON + `Authorization: Bearer {token}`.
+API RESTful para gerenciamento de tarefas, com autenticação OAuth2 via Laravel Passport. Este pacote é o **backend** de um monorepo cujo frontend (Angular + PrimeNG) vive em `/frontend`. Toda a comunicação entre as duas pontas passa por JSON + `Authorization: Bearer {token}`.
 
 ---
 
@@ -550,7 +550,6 @@ O repositório adota **Conventional Commits** para mensagens e **feature branche
 
 - **Repositório:** <https://github.com/Guilh3rme-August0-bs/laravel-task-management-api>
 - **PR #1 (referência de fluxo):** [Merge pull request #1 from Guilh3rme-August0-bs/primeng](https://github.com/Guilh3rme-August0-bs/laravel-task-management-api/pull/1)
-- **Frontend (Angular):** [`../frontend`](../frontend) — instruções em [`../frontend/README.md`](../frontend/README.md)
 - **Laravel:** <https://laravel.com/docs>
 - **Laravel Passport:** <https://laravel.com/docs/passport>
 - **Pest:** <https://pestphp.com>
