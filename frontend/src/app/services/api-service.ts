@@ -12,6 +12,10 @@ public http = inject(HttpClient);
     return this.http.post('http://localhost:8000/api/login', { email, password });
   }
 
+  signUp(name: string, email: string, password: string) {
+    return this.http.post('http://localhost:8000/api/users', { name, email, password });
+  }
+
   getTasks(page: number, perPage: number, sortField?: string, sortOrder?: string, filters?: any) {
     let params = `?page=${page}&per_page=${perPage}`;
     if (sortField && sortOrder) {
