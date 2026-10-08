@@ -38,7 +38,7 @@ Funcionalidades cobertas:
 | Lint/Formatação | Laravel Pint | `^1.27` |
 | Localização | lucascudo/laravel-pt-br-localization | `^3.0` |
 
-**Frontend** (`frontend/`) — documentado em [`../frontend/README.md`](../frontend/README.md)
+**Frontend** (`frontend/`) — documentado em `/frontend/README.md`
 
 | Camada | Tecnologia | Versão |
 | --- | --- | --- |
@@ -90,7 +90,7 @@ Repositório: <https://github.com/Guilh3rme-August0-bs/laravel-task-management-a
 
 - **PHP 8.3+** com extensões `pdo_sqlite` (default) ou `pdo_mysql` (caso troque o driver).
 - **Composer 2.x**.
-- **Node.js 20+** e **npm 10+** apenas se você for rodar o frontend em [`../frontend`](../frontend).
+- **Node.js 20+** e **npm 10+** apenas se você for rodar o frontend em `../frontend`.
 - Opcional: **Laravel Sail** ou **Docker** caso prefira isolar o ambiente (não há `docker-compose.yml` versionado até o momento — ver [limitações](#limitações-conhecidas)).
 
 > Em Linux, o jeito mais rápido de obter PHP + Composer é o [`php.new`](https://php.new): `curl -fsSL https://php.new/install/linux/8.3 | bash`.
