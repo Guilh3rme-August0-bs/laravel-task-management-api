@@ -5,19 +5,12 @@
       <label for="email" class="text-white text-md">Email</label>
       <input class="w-57 border border-neutral-700 text-md p-2 rounded-md" type="text" placeholder="Email" formControlName="email" />
     </div>
-    <!--    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 w-full">
       <label for="password" class="text-white text-md">Password</label>
-      <input
-        class="w-90 bg-blue-200 text-md p-2 rounded-sm"
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-      />
-    </div>-->
-    <div class="card flex justify-content-center w-full">
-      <p-password formControlName="password" [toggleMask]="true" [feedback]="false" class="w-full" />
+      <p-password formControlName="password" [toggleMask]="true" [feedback]="true" class="w-full" />
     </div>
     <app-button content="Login" (onClick)="login()" [disabled]="form.invalid" severity="contrast"></app-button>
+    <a routerLink="/signup" class="text-white text-md hover:text-blue-500">Não tem uma conta? Cadastre-se</a>
   </form>
   @if (loading()) {
   <app-loading></app-loading>
