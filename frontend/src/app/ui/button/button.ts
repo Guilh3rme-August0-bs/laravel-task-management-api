@@ -11,7 +11,6 @@ export class Button {
   @Input() content: string = 'Clica em mim';
   @Output() onClick = new EventEmitter<any>();
   @Input() disabled: boolean = false;
-  @Input() severity: 'primary' | 'secondary' | 'danger' | 'success' | 'info' | 'help' | 'contrast' | 'warning' = 'primary';
-  @Input() icon: string = ''
-
+  @Input() severity: 'primary' | 'secondary' | 'danger' | 'success' | 'info' | 'help' | 'contrast' = 'primary';
+  @Input() icon: string = '';
 }
