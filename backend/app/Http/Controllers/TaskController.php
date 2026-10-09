@@ -68,7 +68,7 @@ class TaskController extends Controller
 
             // Para campos relacionados (user.name)
             if ($sortBy === 'user.name') {
-                $query->join('users', 'tasks.user_id', '=', 'users.id')
+                $query->join('users', 'tasks.user_id', '=', 'users.user_id')
                     ->orderBy('users.name', $sortOrder)
                     ->select('tasks.*');
             } else {
@@ -106,7 +106,7 @@ class TaskController extends Controller
         }
 
         $dados = $validator->validated();
-        $dados['user_id'] = auth('api')->user()->id;
+        $dados['user_id'] = auth('api')->user()->user_id;
 
         $task = Task::create($dados);
 

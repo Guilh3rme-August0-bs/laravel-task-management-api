@@ -19,7 +19,7 @@ class User extends Authenticatable implements OAuthenticatable
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'user_id';
 
     /**
      * Get the attributes that should be cast.

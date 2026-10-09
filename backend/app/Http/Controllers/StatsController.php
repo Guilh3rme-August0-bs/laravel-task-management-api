@@ -27,15 +27,15 @@ public function getStats()
     // Query separada para tarefas por usuário
     $sqlPorUsuario = "
         SELECT 
-            u.id AS usuario_id,
+            u.user_id AS usuario_id,
             u.name AS usuario_nome,
             COUNT(t.id) AS total_tarefas,
             COUNT(CASE WHEN t.status = 'PENDENTE' THEN 1 END) AS pendentes,
             COUNT(CASE WHEN t.status = 'EM_ANDAMENTO' THEN 1 END) AS em_andamento,
             COUNT(CASE WHEN t.status = 'CONCLUIDA' THEN 1 END) AS concluidas
         FROM users u
-        LEFT JOIN tasks t ON t.user_id = u.id
-        GROUP BY u.id, u.name
+        LEFT JOIN tasks t ON t.user_id = u.user_id
+        GROUP BY u.user_id, u.name
         ORDER BY total_tarefas DESC
     ";
 
