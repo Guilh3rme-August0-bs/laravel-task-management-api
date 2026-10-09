@@ -24,20 +24,20 @@ class RequestController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                "erro" => $validator->errors()
+                'erro' => $validator->errors(),
             ]);
         }
 
         return response()->json([
-            "task" => $task,
-            "status" => $status,
-            "caminho-interno-da-url" => $path,
-            "caminho-sem-parametros" => $withoutParams,
-            "url-completa" => $completeURL,
-            "url-scheme-post"=>$scheme_http_post,
-            "dominio" => $domain,
-            "dominio-com-PORTA" => $domainWithPORT,
-            "estrutura-completa-da-request" => $request
+            'task' => $task,
+            'status' => $status,
+            'caminho-interno-da-url' => $path,
+            'caminho-sem-parametros' => $withoutParams,
+            'url-completa' => $completeURL,
+            'url-scheme-post' => $scheme_http_post,
+            'dominio' => $domain,
+            'dominio-com-PORTA' => $domainWithPORT,
+            'estrutura-completa-da-request' => $request,
         ]);
     }
 }

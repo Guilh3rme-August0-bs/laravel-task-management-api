@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
-
-public function getStats()
-{
-    $sql = "
+    public function getStats()
+    {
+        $sql = "
         SELECT 
             -- Total geral de tarefas
             COUNT(*) AS total_tarefas,
@@ -22,10 +20,10 @@ public function getStats()
         FROM tasks
     ";
 
-    $estatisticasGerais = DB::select($sql);
+        $estatisticasGerais = DB::select($sql);
 
-    // Query separada para tarefas por usuário
-    $sqlPorUsuario = "
+        // Query separada para tarefas por usuário
+        $sqlPorUsuario = "
         SELECT 
             u.id AS usuario_id,
             u.name AS usuario_nome,
@@ -39,11 +37,11 @@ public function getStats()
         ORDER BY total_tarefas DESC
     ";
 
-    $estatisticasPorUsuario = DB::select($sqlPorUsuario);
+        $estatisticasPorUsuario = DB::select($sqlPorUsuario);
 
-    return response()->json([
-        'geral' => $estatisticasGerais[0], // Retorna o primeiro (e único) registro
-        'por_usuario' => $estatisticasPorUsuario
-    ]);
-}
+        return response()->json([
+            'geral' => $estatisticasGerais[0], // Retorna o primeiro (e único) registro
+            'por_usuario' => $estatisticasPorUsuario,
+        ]);
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -11,8 +11,9 @@ class UserController extends Controller
     public function getUser()
     {
         $users = User::all();
+
         return response()->json([
-            'usuários' => $users
+            'usuários' => $users,
         ]);
     }
 
@@ -27,8 +28,9 @@ class UserController extends Controller
         $dados = $validator->validated();
 
         $user = User::create($dados);
+
         return response()->json([
-            'usuário criado' => $user
+            'usuário criado' => $user,
         ]);
     }
 
@@ -36,8 +38,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+
         return response()->json([
-            'usuário deletado' => $user->name
+            'usuário deletado' => $user->name,
         ]);
     }
 }

@@ -106,7 +106,7 @@ class TaskController extends Controller
         }
 
         $dados = $validator->validated();
-        $dados['user_id'] = auth('api')->user()->id;
+        $dados['user_id'] = auth('api')->user()->user_id;
 
         $task = Task::create($dados);
 
