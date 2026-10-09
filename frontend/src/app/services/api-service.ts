@@ -14,7 +14,12 @@ export class ApiService {
   private cacheMap = new Map<string, Observable<any>>();
 
   login(email: string, password: string) {
-    return this.http.post('http://localhost:8000/api/login', { email, password });
+    return this.http.post('http://localhost:8000/api/login', { email, password }).pipe(
+      map(response => {
+        this.clearTasksCache();
+        return response;
+      })
+    );
   }
 
   signUp(name: string, email: string, password: string) {
@@ -95,7 +100,7 @@ export class ApiService {
   // Método para limpar o cache de tarefas
   private clearTasksCache(): void {
     // Remover todas as URLs que contenham 'tasks' do cache
-    this.cacheMap.forEach((_, key) => {
+    this.cacheMap.forEach((_: Observable<any>, key: string) => {
       if (key.includes('/api/tasks')) {
         this.cacheMap.delete(key);
       }
