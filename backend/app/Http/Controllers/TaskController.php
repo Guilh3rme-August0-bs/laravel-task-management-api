@@ -68,7 +68,7 @@ class TaskController extends Controller
 
             // Para campos relacionados (user.name)
             if ($sortBy === 'user.name') {
-                $query->join('users', 'tasks.user_id', '=', 'users.id')
+                $query->join('users', 'tasks.user_id', '=', 'users.user_id')
                     ->orderBy('users.name', $sortOrder)
                     ->select('tasks.*');
             } else {

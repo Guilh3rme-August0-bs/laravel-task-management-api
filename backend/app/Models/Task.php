@@ -14,12 +14,7 @@ class Task extends Model
 
     public function user()
     {
-        /* houve uma migration desnecessária para renomear a coluna user_id na tabela Users,
-        por isso o select para pegar apenas o user_id e o name */
-
-        /* Laravel já relacionaria user_id(tasks) a user_id(users) automaticamente quando usasse belongsTo
-         e hasMany */
-
+        /* A chave primária de User é user_id (não id) */
         return $this->belongsTo(User::class, 'user_id', 'user_id')->select('user_id', 'name');
     }
 }
