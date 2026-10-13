@@ -22,26 +22,31 @@ class StatsController extends Controller
 
         $estatisticasGerais = DB::select($sql);
 
-        // Query separada para tarefas por usuário
-        $sqlPorUsuario = "
-        SELECT 
-            u.user_id AS usuario_id,
-            u.name AS usuario_nome,
-            COUNT(t.id) AS total_tarefas,
-            COUNT(CASE WHEN t.status = 'PENDENTE' THEN 1 END) AS pendentes,
-            COUNT(CASE WHEN t.status = 'EM_ANDAMENTO' THEN 1 END) AS em_andamento,
-            COUNT(CASE WHEN t.status = 'CONCLUIDA' THEN 1 END) AS concluidas
-        FROM users u
-        LEFT JOIN tasks t ON t.user_id = u.user_id
-        GROUP BY u.user_id, u.name
-        ORDER BY total_tarefas DESC
-    ";
-
-        $estatisticasPorUsuario = DB::select($sqlPorUsuario);
-
         return response()->json([
             'geral' => $estatisticasGerais[0], // Retorna o primeiro (e único) registro
-            'por_usuario' => $estatisticasPorUsuario,
         ]);
     }
+
+        public function getStatsByUser()
+    {
+        $userId = auth('api')->id();
+        $sql = "    
+        SELECT 
+            t.user_id AS usuario_id,
+            u.name AS usuario_nome,
+            COUNT(*) AS total_tarefas,
+            COUNT(CASE WHEN t.status = 'PENDENTE' THEN 1 END) AS tarefas_pendentes,
+            COUNT(CASE WHEN t.status = 'EM_ANDAMENTO' THEN 1 END) AS tarefas_em_andamento,
+            COUNT(CASE WHEN t.status = 'CONCLUIDA' THEN 1 END) AS tarefas_concluidas
+        FROM tasks t
+        JOIN users u ON t.user_id = u.user_id
+        WHERE t.user_id = ?
+        GROUP BY t.user_id, u.name
+    ";
+
+        $estatisticas = DB::select($sql, [$userId]);
+
+        return response()->json($estatisticas);
+    }
+
 }
