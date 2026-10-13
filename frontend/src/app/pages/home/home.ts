@@ -73,4 +73,21 @@ export class Home {
       }
     });
   }
+
+  getStats() {
+    this.apiService.getStats().subscribe({
+      next: (res: any) => {
+        console.log(res)
+        const stats = res[0];
+        const message = `Total de tarefas: ${stats.total_tarefas}
+Tarefas concluídas: ${stats.tarefas_concluidas}
+Tarefas em andamento: ${stats.tarefas_em_andamento}
+Tarefas pendentes: ${stats.tarefas_pendentes}`;
+        this.notificationService.info(message);
+      },
+      error: (err: any) => {
+        this.notificationService.error(err)
+      }
+    })
+  }
 }
