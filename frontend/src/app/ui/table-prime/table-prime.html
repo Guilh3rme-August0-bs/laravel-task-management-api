@@ -46,7 +46,10 @@
     [loading]="loading()">
     <ng-template pTemplate="caption">
         <div class="flex justify-between align-items-center">
-            <ng-content select="[caption-left]"></ng-content>
+            <div class="flex flex-row gap-2">
+                <ng-content select="[caption-left]"></ng-content>
+                <ng-content select="[caption-right]"></ng-content>
+            </div>
             <p-button [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear(dt)" label="Limpar" />
         </div>
     </ng-template>
