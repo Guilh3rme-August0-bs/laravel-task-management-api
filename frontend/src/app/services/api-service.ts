@@ -97,6 +97,14 @@ export class ApiService {
     );
   }
 
+  getStats() {
+    return this.http.get(`http://localhost:8000/api/stats`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   // Método para limpar o cache de tarefas
   private clearTasksCache(): void {
     // Remover todas as URLs que contenham 'tasks' do cache
