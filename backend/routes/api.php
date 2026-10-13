@@ -44,7 +44,7 @@ Route::get('users', [UserController::class, 'getUser']);
 Route::post('users', [UserController::class, 'createUser']);
 Route::delete('users/{id}', [UserController::class, 'deleteUser']);
 
-Route::get('stats', [StatsController::class, 'getStats']);
+Route::get('stats', [StatsController::class, 'getStatsByUser']);
 
 // rota para testar HTTP requests
 Route::post('request', [RequestController::class, 'takeReqData']);
