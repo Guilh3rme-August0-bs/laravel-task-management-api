@@ -73,6 +73,7 @@ export class ApiService {
     }).pipe(
       map(response => {
         this.clearTasksCache();
+        this.clearStatsCache();
         return response;
       })
     );
@@ -86,6 +87,7 @@ export class ApiService {
     }).pipe(
       map(response => {
         this.clearTasksCache();
+        this.clearStatsCache();
         return response;
       })
     );
@@ -99,6 +101,7 @@ export class ApiService {
     }).pipe(
       map(response => {
         this.clearTasksCache(); 
+        this.clearStatsCache();
         return response;
       })
     );
