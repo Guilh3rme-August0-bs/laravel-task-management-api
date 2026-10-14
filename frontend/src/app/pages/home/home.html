@@ -1,8 +1,25 @@
 <header
-  class="flex flex-row justify-between bg-linear-to-r from-red-900 to-orange-600 p-4 text-white text-2xl font-bold">Task
+  class="flex flex-row justify-between bg-linear-to-r from-red-800 to-rose-600 p-4 text-white text-2xl font-bold">Task
   Management CRUD
 </header>
 <div class="flex flex-col gap-8 h-[90vh] bg-linear-to-br from-black to-red-950 items-center justify-center">
+
+  <p-drawer [(visible)]="isDrawerOpen" [position]="'right'" [style]="{ width: '600px' }"  [dismissible]="false" (onShow)="onDrawerShow()">
+    <div class="flex flex-col gap-4 p-5">
+      <h1 class="text-4xl font-bold">Estatísticas</h1>
+      <div class="flex flex-col gap-2">
+        <p class="text-lg">Total de tarefas: {{ rawStats()?.total_tarefas }}</p>
+        <p class="text-lg">Total de tarefas concluídas: {{ rawStats()?.tarefas_concluidas }}</p>
+        <p class="text-lg">Total de tarefas pendentes: {{ rawStats()?.tarefas_pendentes }}</p>
+        <p class="text-lg">Total de tarefas em andamento: {{ rawStats()?.tarefas_em_andamento }}</p>
+        <div class="card flex justify-content-center" style="width: 100%; height: 400px; min-height: 400px; gap: 10px;">
+          <p-chart *ngIf="stats()?.labels" type="pie" [data]="stats()" [options]="chartOptions" [style]="{'width': '100%', 'height': '100%', gap: '10px'}" />
+          <div *ngIf="!stats()?.labels" class="text-white">Carregando gráfico...</div>
+      </div>
+      </div>
+    </div>
+  </p-drawer>
+
   <div class="flex justify-center items-center gap-2 h-100 w-full px-4">
     <app-table-prime (rowClick)="openModal($event, 'view')">
       <app-button caption-right icon="pi pi-chart-bar" content="Estatísticas" severity="contrast" (onClick)="getStats()"></app-button>
