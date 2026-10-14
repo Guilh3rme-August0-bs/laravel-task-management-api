@@ -17,13 +17,20 @@ export class ApiService {
     return this.http.post('http://localhost:8000/api/login', { email, password }).pipe(
       map(response => {
         this.clearTasksCache();
+        this.clearStatsCache();
         return response;
       })
     );
   }
 
   signUp(name: string, email: string, password: string) {
-    return this.http.post('http://localhost:8000/api/users', { name, email, password });
+    return this.http.post('http://localhost:8000/api/users', { name, email, password }).pipe(
+      map(response => {
+        this.clearTasksCache();
+        this.clearStatsCache();
+        return response;
+      })
+    );
   }
 
   getTasks(page: number, perPage: number, sortField?: string, sortOrder?: string, filters?: any): Observable<any> {
@@ -97,19 +104,36 @@ export class ApiService {
     );
   }
 
-  getStats() {
-    return this.http.get(`http://localhost:8000/api/stats`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+  getStats(): Observable<any> {
+    const url = 'http://localhost:8000/api/stats';
+  
+    // Verificar se a requisição já está em cache
+    if (!this.cacheMap.has(url)) {
+      const request$ = this.http.get(url, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      }).pipe(
+        shareReplay(1)
+      );
+      this.cacheMap.set(url, request$);
+    }
+  
+    return this.cacheMap.get(url)!;
   }
 
-  // Método para limpar o cache de tarefas
   private clearTasksCache(): void {
     // Remover todas as URLs que contenham 'tasks' do cache
     this.cacheMap.forEach((_: Observable<any>, key: string) => {
       if (key.includes('/api/tasks')) {
+        this.cacheMap.delete(key);
+      }
+    });
+  }
+
+  private clearStatsCache(): void {
+    this.cacheMap.forEach((_: Observable<any>, key: string) => {
+      if (key.includes('/api/stats')) {
         this.cacheMap.delete(key);
       }
     });
