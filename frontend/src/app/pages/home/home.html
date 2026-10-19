@@ -1,6 +1,8 @@
 <header
   class="flex flex-row justify-between bg-linear-to-r from-red-800 to-rose-600 p-4 text-white text-2xl font-bold">Task
   Management CRUD
+  <!--<app-button caption-right icon="pi pi-sign-out" content="Sair" severity="contrast" (onClick)="logout()"></app-button>-->
+  <p-button [outlined]="true" icon="pi pi-sign-out" severity="contrast" label="Sair" (onClick)="logout()"/>
 </header>
 <div class="flex flex-col gap-8 h-screen bg-linear-to-br from-black to-red-950">
 

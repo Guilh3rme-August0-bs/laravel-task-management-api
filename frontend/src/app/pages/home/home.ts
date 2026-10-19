@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api-service';
 import { Modal } from '../../ui/modal/modal';
 import { Button } from '../../ui/button/button';
+import { ButtonModule } from 'primeng/button';
 import { NotificationService } from '../../services/notification-service';
 import { TablePrime } from '../../ui/table-prime/table-prime';
 import { DrawerModule } from 'primeng/drawer';
 import { ChartModule } from 'primeng/chart';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule],
+  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule, ButtonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -21,7 +23,7 @@ export class Home {
 
   public apiService = inject(ApiService);
   private notificationService = inject(NotificationService);
-
+  private router = inject(Router);
   tablePrime = viewChild.required(TablePrime);
 
   isDrawerOpen: boolean = false;
@@ -121,5 +123,9 @@ export class Home {
         this.notificationService.error(err)
       }
     })
+  }
+
+  logout() {
+    this.router.navigate(['/']);
   }
 }
