@@ -22,7 +22,7 @@
     </div>
   </p-drawer>
 
-  <div class="flex items-start justify-center mt-10 gap-2 h-100 w-full px-4">
+  <div class="flex items-start justify-center mt-[1.5vh] gap-2 h-100 w-full px-4">
     <app-table-prime (rowClick)="openModal($event, 'view')">
       <app-button caption-right icon="pi pi-chart-bar" content="Estatísticas" severity="contrast" (onClick)="getStats()"></app-button>
       <app-button caption-left content="Nova tarefa" title="Adicionar nova tarefa" severity="contrast" (onClick)="openModal(null, 'add')"></app-button>
