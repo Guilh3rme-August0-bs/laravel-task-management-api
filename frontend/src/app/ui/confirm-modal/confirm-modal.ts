@@ -9,6 +9,11 @@ import { Button } from '../button/button';
 })
 export class ConfirmModal {
   @Input() isOpen: boolean = false;
+  @Input() title: string = '';
+  @Input() message: string = '';
+  @Input() confirmMessage: string = 'Confirm';
+  @Input() cancelMessage: string = 'Cancel';
+
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
