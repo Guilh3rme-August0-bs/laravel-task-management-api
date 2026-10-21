@@ -9,10 +9,11 @@ import { TablePrime } from '../../ui/table-prime/table-prime';
 import { DrawerModule } from 'primeng/drawer';
 import { ChartModule } from 'primeng/chart';
 import { Router } from '@angular/router';
+import { ConfirmModal } from '../../ui/confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule, ButtonModule],
+  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule, ButtonModule, ConfirmModal],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -123,6 +124,16 @@ export class Home {
         this.notificationService.error(err)
       }
     })
+  }
+
+  isConfirmOpen = signal<boolean>(false);
+
+  openConfirmModal() {
+    this.isConfirmOpen.set(true);
+  }
+
+  closeConfirmModal() {
+    this.isConfirmOpen.set(false);
   }
 
   logout() {
