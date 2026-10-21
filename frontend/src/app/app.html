@@ -2,7 +2,7 @@
   <router-outlet />
 </main>
 
-<div class="pointer-events-none fixed top-4 right-4 z-100 flex flex-col gap-3">
+<div class="pointer-events-none fixed top-[8vh] right-4 z-100 flex flex-col gap-3">
   @for (n of notificationService.notifications(); track n.id) {
     <div class="pointer-events-auto">
       <app-notification
