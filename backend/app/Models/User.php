@@ -33,4 +33,9 @@ class User extends Authenticatable implements OAuthenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'user_id', 'user_id');
+    }
 }
