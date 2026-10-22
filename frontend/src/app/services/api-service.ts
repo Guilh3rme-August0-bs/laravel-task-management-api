@@ -33,6 +33,14 @@ export class ApiService {
     );
   }
 
+  deleteAccount() {
+    return this.http.delete(`http://localhost:8000/api/users`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   getTasks(page: number, perPage: number, sortField?: string, sortOrder?: string, filters?: any): Observable<any> {
     let params = `?page=${page}&per_page=${perPage}`;
     if (sortField && sortOrder) {

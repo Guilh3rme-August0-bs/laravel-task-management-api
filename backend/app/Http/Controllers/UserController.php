@@ -34,9 +34,23 @@ class UserController extends Controller
         ]);
     }
 
-    public function deleteUser(string $id)
+    public function updateUsername(string $name, string $id)
     {
         $user = User::findOrFail($id);
+        $user->update([
+            'name' => $name,
+        ]);
+
+        return response()->json([
+            'usuário atualizado' => $user,
+        ]);
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $user = $request->user();
+
+        $user->tasks()->delete();
         $user->delete();
 
         return response()->json([
