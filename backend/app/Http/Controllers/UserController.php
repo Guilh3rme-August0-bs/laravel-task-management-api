@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -34,11 +35,25 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateUsername(string $name, string $id)
+    public function updateUsername(Request $request)
     {
-        $user = User::findOrFail($id);
+        $validator = Validator::make($request->all(), [
+            'newUsername' => 'required|string|max:255',
+            'password' => 'required|string',
+        ]);
+
+        $dados = $validator->validated();
+
+        $user = $request->user();
+
+        if (! Hash::check($dados['password'], $user->password)) {
+            return response()->json([
+                'message' => 'Senha incorreta.',
+            ], 401);
+        }
+
         $user->update([
-            'name' => $name,
+            'name' => $dados['newUsername'],
         ]);
 
         return response()->json([

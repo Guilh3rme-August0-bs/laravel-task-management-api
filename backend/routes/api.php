@@ -42,7 +42,7 @@ Route::get('service', [DIController::class, 'store']);
 
 Route::get('users', [UserController::class, 'getUser']);
 Route::post('users', [UserController::class, 'createUser']);
-Route::put('users/{id}', [UserController::class, 'updateUsername']);
+Route::put('users', [UserController::class, 'updateUsername'])->middleware('auth:api');
 Route::delete('users', [UserController::class, 'deleteUser'])->middleware('auth:api');
 
 Route::get('stats', [StatsController::class, 'getStatsByUser']);
