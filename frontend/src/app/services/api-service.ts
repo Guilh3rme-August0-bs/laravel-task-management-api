@@ -33,6 +33,20 @@ export class ApiService {
     );
   }
 
+  changeUsername(newUsername: string, password: string) {
+    return this.http.put(`http://localhost:8000/api/users`, { newUsername, password }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }).pipe(
+      map(response => {
+        this.clearTasksCache();
+        this.clearStatsCache();
+        return response;
+      })
+    );
+  }
+
   deleteAccount() {
     return this.http.delete(`http://localhost:8000/api/users`, {
       headers: {
