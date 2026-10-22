@@ -15,20 +15,20 @@ Route::get('/', function (Request $request) {
 })->middleware('auth:api');
 
 Route::post('login', function (Request $request) {
-    
+
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
     ]);
-    
+
     $user = User::where('email', $request->email)->first();
-    
+
     if (! $user || ! Hash::check($request->password, $user->password)) {
         return response()->json([
             'message' => 'Credenciais inválidas',
         ], 401);
     }
-    
+
     $token = $user->createToken('my-app-token')->accessToken;
 
     return response()->json([
@@ -42,7 +42,8 @@ Route::get('service', [DIController::class, 'store']);
 
 Route::get('users', [UserController::class, 'getUser']);
 Route::post('users', [UserController::class, 'createUser']);
-Route::delete('users/{id}', [UserController::class, 'deleteUser']);
+Route::put('users/{id}', [UserController::class, 'updateUsername']);
+Route::delete('users', [UserController::class, 'deleteUser'])->middleware('auth:api');
 
 Route::get('stats', [StatsController::class, 'getStatsByUser']);
 
