@@ -89,8 +89,15 @@ export class Home {
         this.closeModal();
       },
       error: (err: any) => {
-        console.log(err);
-        this.notificationService.error('Erro ao criar tarefa.');
+        if (err.error?.errors) {
+          Object.values(err.error.errors).forEach((messages: any) => {
+            messages.forEach((message: string) => {
+              this.notificationService.error(message);
+            });
+          });
+        } else {
+          this.notificationService.error(err.error?.message || 'Erro ao criar tarefa.');
+        }
       }
     });
   }
