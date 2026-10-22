@@ -2,7 +2,10 @@
   class="flex flex-row justify-between bg-linear-to-r from-red-800 to-rose-600 p-4 text-white text-2xl font-bold">Task
   Management CRUD
   <!--<app-button caption-right icon="pi pi-sign-out" content="Sair" severity="contrast" (onClick)="logout()"></app-button>-->
-  <p-button [outlined]="true" icon="pi pi-sign-out" severity="contrast" label="Sair" (onClick)="openConfirmModal()"/>
+  <div class="flex text-[15px] font-semibold">
+    <p-menu #menu [model]="menuItems" [popup]="true" />
+    <p-button [outlined]="true" (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" severity="contrast"/>
+</div>
 </header>
 <div class="flex flex-col gap-8 h-screen bg-linear-to-br from-black to-red-950">
 
@@ -33,4 +36,10 @@
 <app-modal [isOpen]="isModalOpen()" [task]="selectedTask()" [mode]="mode()" (close)="closeModal()"
   (save)="saveTask($event)" (add)="addTask($event)" (delete)="deleteTask($event)"></app-modal>
 
-<app-confirm-modal [isOpen]="isConfirmOpen()" title="Sair" message="Tem certeza que deseja sair?" confirmMessage="Sim" cancelMessage="Não" (confirm)="logout()" (cancel)="closeConfirmModal()"></app-confirm-modal>
+<app-confirm-modal [isOpen]="isConfirmOpen()" 
+title="{{ modalConfirmTitle() }}" 
+message="{{ modalConfirmMessage() }}" 
+confirmMessage="Sim" 
+cancelMessage="Não" 
+(confirm)="modalConfirm()()" 
+(cancel)="modalCancel()()"></app-confirm-modal>
