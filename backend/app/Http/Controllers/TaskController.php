@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -86,26 +87,9 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'tarefa' => ['required', 'string', 'max:50', 'unique:tasks,tarefa'],
-            'descricao' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', 'in:PENDENTE,EM_ANDAMENTO,CONCLUIDA'],
-            'prioridade' => ['required', 'in:BAIXA,MEDIA,ALTA'],
-        ]);
-
-        if ($validator->fails()) {
-
-            return response()->json([
-                'erro' => $validator->errors(),
-                // OUTRA ALTERNATIVA:
-                // "messages"=>$validator->messages()
-            ]);
-        }
-
-        $dados = $validator->validated();
+        $dados = $request->validated();
         $dados['user_id'] = auth('api')->user()->user_id;
 
         $task = Task::create($dados);
