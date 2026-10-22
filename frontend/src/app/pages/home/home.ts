@@ -11,10 +11,11 @@ import { DrawerModule } from 'primeng/drawer';
 import { ChartModule } from 'primeng/chart';
 import { Router } from '@angular/router';
 import { ConfirmModal } from '../../ui/confirm-modal/confirm-modal';
+import { PasswordModal } from '../../ui/password-modal/password-modal';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule, ButtonModule, ConfirmModal, MenuModule],
+  imports: [CommonModule, TablePrime, Modal, Button, DrawerModule, ChartModule, ButtonModule, ConfirmModal, MenuModule, PasswordModal],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -39,20 +40,35 @@ export class Home {
   menuItems: any[] | undefined
   modalConfirmTitle = signal<string>('');
   modalConfirmMessage = signal<string>('');
-  modalConfirm = signal<() => void>(() => {});
-  modalCancel = signal<() => void>(() => {});
+  modalConfirm = signal<() => void>(() => { });
+  modalCancel = signal<() => void>(() => { });
+
+  isPasswordOpen = signal<boolean>(false);
+
+  closePasswordModal() {
+    this.isPasswordOpen.set(false);
+  }
+
+  onUsernameChanged() {
+    this.tablePrime().refreshData();
+    this.notificationService.success('Nome de usuário atualizado com sucesso!');
+  }
 
   ngOnInit() {
     this.menuItems = [
-      { label: 'Sair', icon: 'pi pi-sign-out', command: () => this.openConfirmModal(
-        'Sair', 
-        'Tem certeza que deseja sair?', 
-         () => this.logout(), () => this.closeConfirmModal()) },
-      { label: 'Mudar nome de usuário', icon: 'pi pi-user', command: () => alert('Em breve') },
-      { label: 'Excluir conta', icon: 'pi pi-trash', command: () => this.openConfirmModal(
-        'Excluir conta', 
-        'Tem certeza que deseja excluir sua conta?', 
-         () => this.deleteAccount(), () => this.closeConfirmModal()) }
+      {
+        label: 'Sair', icon: 'pi pi-sign-out', command: () => this.openConfirmModal(
+          'Sair',
+          'Tem certeza que deseja sair?',
+          () => this.logout(), () => this.closeConfirmModal())
+      },
+      { label: 'Mudar nome de usuário', icon: 'pi pi-user', command: () => this.isPasswordOpen.set(true) },
+      {
+        label: 'Excluir conta', icon: 'pi pi-trash', command: () => this.openConfirmModal(
+          'Excluir conta',
+          'Tem certeza que deseja excluir sua conta?',
+          () => this.deleteAccount(), () => this.closeConfirmModal())
+      }
     ];
   }
 
@@ -165,8 +181,8 @@ export class Home {
 
   closeConfirmModal() {
     this.modalConfirmMessage.set('');
-    this.modalConfirm.set(() => {});
-    this.modalCancel.set(() => {});
+    this.modalConfirm.set(() => { });
+    this.modalCancel.set(() => { });
     this.isConfirmOpen.set(false);
   }
 

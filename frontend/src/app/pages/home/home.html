@@ -43,3 +43,6 @@ confirmMessage="Sim"
 cancelMessage="Não" 
 (confirm)="modalConfirm()()" 
 (cancel)="modalCancel()()"></app-confirm-modal>
+
+<app-password-modal [isOpen]="isPasswordOpen()" (close)="closePasswordModal()" (usernameChanged)="onUsernameChanged()">
+</app-password-modal>
