@@ -44,7 +44,6 @@ export class TablePrime implements OnInit {
   sort_field = signal<string | undefined>(undefined);
   sort_order = signal<string | undefined>(undefined);
   
-  // Opções para os selects
   statusOptions = [
     { label: 'Pendente', value: 'PENDENTE' },
     { label: 'Em Andamento', value: 'EM_ANDAMENTO' },
@@ -57,7 +56,6 @@ export class TablePrime implements OnInit {
     { label: 'Alta', value: 'ALTA' }
   ];
   
-  // Filtros
   filters = {
     id: '',
     tarefa: '',
@@ -66,6 +64,8 @@ export class TablePrime implements OnInit {
     criado_em: null as Date | null,
     atualizado_em: null as Date | null
   };
+
+  appliedFilters = { ...this.filters };
 
   private apiService = inject(ApiService);
   private notificationService = inject(NotificationService);
@@ -77,17 +77,16 @@ export class TablePrime implements OnInit {
   loadTasks() {
     this.loading.set(true);
     
-    // Preparar filtros apenas com valores preenchidos
     const activeFilters: any = {};
-    if (this.filters.id) activeFilters.id = this.filters.id;
-    if (this.filters.tarefa) activeFilters.tarefa = this.filters.tarefa;
-    if (this.filters.status) activeFilters.status = this.filters.status;
-    if (this.filters.prioridade) activeFilters.prioridade = this.filters.prioridade;
-    if (this.filters.criado_em) {
-      activeFilters.criado_em = this.formatDateToBackend(this.filters.criado_em);
+    if (this.appliedFilters.id) activeFilters.id = this.appliedFilters.id;
+    if (this.appliedFilters.tarefa) activeFilters.tarefa = this.appliedFilters.tarefa;
+    if (this.appliedFilters.status) activeFilters.status = this.appliedFilters.status;
+    if (this.appliedFilters.prioridade) activeFilters.prioridade = this.appliedFilters.prioridade;
+    if (this.appliedFilters.criado_em) {
+      activeFilters.criado_em = this.formatDateToBackend(this.appliedFilters.criado_em);
     }
-    if (this.filters.atualizado_em) {
-      activeFilters.atualizado_em = this.formatDateToBackend(this.filters.atualizado_em);
+    if (this.appliedFilters.atualizado_em) {
+      activeFilters.atualizado_em = this.formatDateToBackend(this.appliedFilters.atualizado_em);
     }
     
     this.apiService.getTasks(
@@ -118,7 +117,7 @@ export class TablePrime implements OnInit {
   }
 
   applyFilters() {
-    // Resetar para primeira página ao aplicar filtros
+    this.appliedFilters = { ...this.filters };
     this.page.set(1);
     this.loadTasks();
   }
@@ -128,7 +127,6 @@ export class TablePrime implements OnInit {
     this.page.set(newPage);
     this.per_page.set(event.rows);
     
-    // Captura ordenação se existir no evento
     if (event.sortField) {
       this.sort_field.set(event.sortField);
       this.sort_order.set(event.sortOrder === 1 ? 'asc' : 'desc');
@@ -143,7 +141,6 @@ export class TablePrime implements OnInit {
   
   clear(table: any) {
     table.clear();
-    // Limpar todos os filtros
     this.filters = {
       id: '',
       tarefa: '',
@@ -152,10 +149,9 @@ export class TablePrime implements OnInit {
       criado_em: null,
       atualizado_em: null
     };
-    // Resetar ordenação
+    this.appliedFilters = { ...this.filters };
     this.sort_field.set(undefined);
     this.sort_order.set(undefined);
-    // Resetar página e recarregar
     this.page.set(1);
     this.loadTasks();
   }
