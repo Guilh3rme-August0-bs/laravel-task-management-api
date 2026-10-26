@@ -1,13 +1,28 @@
 # Task Management CRUD API
 
-![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![Passport](https://img.shields.io/badge/Passport-13-008080?style=for-the-badge&logo=laravel&logoColor=white)
-![Pest](https://img.shields.io/badge/Pest-5-FF6C37?style=for-the-badge&logo=pest&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-dev-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-21-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![PrimeNG](https://img.shields.io/badge/PrimeNG-21-2C3E50?style=for-the-badge&logo=primeng&logoColor=white)
+**Front-end**
+
+![Angular](https://img.shields.io/badge/angular-red?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-white?style=for-the-badge&logo=typescript&logoColor=blue)
+![PrimeNG](https://img.shields.io/badge/primeng-%236366F1?style=for-the-badge&logo=primeng&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2306B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Chart.js](https://img.shields.io/badge/chart.js-%23FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
+
+**Back-end**
+
+![Laravel](https://img.shields.io/badge/laravel-%23FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/php-%23777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Passport](https://img.shields.io/badge/passport-%23008080?style=for-the-badge&logo=laravel&logoColor=white)
+
+**Banco de dados**
+
+![SQLite](https://img.shields.io/badge/sqlite-%23003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+
+**Testes e infraestrutura**
+
+![Pest](https://img.shields.io/badge/pest-%23F472B6?style=for-the-badge&logoColor=white)
+![Vitest](https://img.shields.io/badge/vitest-%236E9F18?style=for-the-badge&logo=vitest&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 Aplicação de gerenciamento de tarefas em monorepo: **backend** (API RESTful em Laravel, com autenticação OAuth2 via Laravel Passport) em `/backend` e **frontend** (Angular + PrimeNG) em `/frontend`. Toda a comunicação entre as duas pontas passa por JSON + `Authorization: Bearer {token}`. Os endpoints e os pacotes do backend são detalhados abaixo.
 
