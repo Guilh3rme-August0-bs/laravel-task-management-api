@@ -28,6 +28,8 @@ Aplicação de gerenciamento de tarefas em monorepo: **backend** (API RESTful em
 
 ---
 
+
+
 ## 📋 Sobre o projeto
 
 A API expõe um CRUD de tarefas vinculadas ao usuário autenticado. Cada usuário enxerga apenas as próprias tarefas (escopo aplicado no controller a partir de `auth('api')->id()`) e as rotas de tarefas exigem um token OAuth2 válido emitido por `POST /api/login`.
@@ -42,30 +44,38 @@ Funcionalidades cobertas:
 - Frontend com telas de login, cadastro e home (tabela de tarefas, filtros, modais de criação, edição e confirmação).
 - Execução em containers com Docker Compose.
 
+
+
 ## 🛠️ Tecnologias
 
 **Backend** (`backend/`)
 
-| Camada | Tecnologia | Versão |
-| --- | --- | --- |
-| Linguagem | PHP | `^8.3` |
-| Framework | Laravel | `^13.17` |
-| Auth OAuth2 | Laravel Passport | `^13.0` |
-| ORM | Eloquent (SQLite default, MySQL opcional) | — |
-| Testes | Pest + Pest Laravel Plugin | `^5.2` |
-| Lint/Formatação | Laravel Pint | `^1.27` |
-| Localização | lucascudo/laravel-pt-br-localization | `^3.0` |
+
+| Camada          | Tecnologia                                | Versão   |
+| --------------- | ----------------------------------------- | -------- |
+| Linguagem       | PHP                                       | `^8.3`   |
+| Framework       | Laravel                                   | `^13.17` |
+| Auth OAuth2     | Laravel Passport                          | `^13.0`  |
+| ORM             | Eloquent (SQLite default, MySQL opcional) | —        |
+| Testes          | Pest + Pest Laravel Plugin                | `^5.2`   |
+| Lint/Formatação | Laravel Pint                              | `^1.27`  |
+| Localização     | lucascudo/laravel-pt-br-localization      | `^3.0`   |
+
 
 **Frontend** (`frontend/`) — documentado em `/frontend/README.md`
 
-| Camada | Tecnologia | Versão |
-| --- | --- | --- |
-| Framework | Angular (standalone) | `^21.2` |
-| UI Kit | PrimeNG + PrimeUIX themes + PrimeIcons | `^21.1` |
-| Ícones | FontAwesome (free solid) | `^7.1` |
-| Gráficos | Chart.js | `^4.5` |
-| Estilo utilitário | Tailwind CSS v4 | `^4.1` |
-| Testes | Vitest + jsdom | `^4.0` |
+
+| Camada            | Tecnologia                             | Versão  |
+| ----------------- | -------------------------------------- | ------- |
+| Framework         | Angular (standalone)                   | `^21.2` |
+| UI Kit            | PrimeNG + PrimeUIX themes + PrimeIcons | `^21.1` |
+| Ícones            | FontAwesome (free solid)               | `^7.1`  |
+| Gráficos          | Chart.js                               | `^4.5`  |
+| Estilo utilitário | Tailwind CSS v4                        | `^4.1`  |
+| Testes            | Vitest + jsdom                         | `^4.0`  |
+
+
+
 
 ## 🏛️ Arquitetura
 
@@ -79,6 +89,8 @@ flowchart LR
   BE -->|Valida / emite tokens| P[Laravel Passport<br/>OAuth2 Server]
   P -->|Lê e grava tokens| DB
 ```
+
+
 
 Camadas do backend:
 
@@ -103,19 +115,23 @@ flowchart TB
   M --> DB
 ```
 
+
+
 Estrutura do frontend (`frontend/src/app`):
 
-| Pasta / arquivo | Responsabilidade |
-| --- | --- |
-| `pages/login`, `pages/sign-up`, `pages/home` | Telas da aplicação. Rotas: `/` (login), `/signup` e `/home`. |
-| `guards/auth-guard.ts` | `authGuard`: protege a rota `/home`. |
-| `services/api-service.ts` | Todas as chamadas HTTP à API, com o token enviado no header `Authorization`. |
-| `services/notification-service.ts` | Notificações de sucesso e erro. |
-| `ui/` | Componentes reutilizáveis: tabela (`table-prime`), modais (`modal`, `confirm-modal`, `password-modal`), `notification`, `loading` e `button`. |
+
+| Pasta / arquivo                              | Responsabilidade                                                                                                                              |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pages/login`, `pages/sign-up`, `pages/home` | Telas da aplicação. Rotas: `/` (login), `/signup` e `/home`.                                                                                  |
+| `guards/auth-guard.ts`                       | `authGuard`: protege a rota `/home`.                                                                                                          |
+| `services/api-service.ts`                    | Todas as chamadas HTTP à API, com o token enviado no header `Authorization`.                                                                  |
+| `services/notification-service.ts`           | Notificações de sucesso e erro.                                                                                                               |
+| `ui/`                                        | Componentes reutilizáveis: tabela (`table-prime`), modais (`modal`, `confirm-modal`, `password-modal`), `notification`, `loading` e `button`. |
+
 
 O `ApiService` guarda as respostas de `GET /api/tasks` e `GET /api/stats` em memória (`shareReplay`) e limpa esse cache a cada operação que altera dados (login, cadastro, criar, editar e excluir tarefa, trocar nome). O token fica no `localStorage`.
 
-Repositório: <https://github.com/Guilh3rme-August0-bs/laravel-task-management-api>
+Repositório: [https://github.com/Guilh3rme-August0-bs/laravel-task-management-api](https://github.com/Guilh3rme-August0-bs/laravel-task-management-api)
 
 ## ✅ Pré-requisitos
 
@@ -124,7 +140,9 @@ Repositório: <https://github.com/Guilh3rme-August0-bs/laravel-task-management-a
 - **Node.js 20+** e **npm 10+** apenas se você for rodar o frontend em `../frontend`.
 - Opcional: **Docker** + **Docker Compose** para rodar backend e frontend em containers (ver [Executando com Docker](#-executando-com-docker)).
 
-> Em Linux, o jeito mais rápido de obter PHP + Composer é o [`php.new`](https://php.new): `curl -fsSL https://php.new/install/linux/8.3 | bash`.
+> Em Linux, o jeito mais rápido de obter PHP + Composer é o `[php.new](https://php.new)`: `curl -fsSL https://php.new/install/linux/8.3 | bash`.
+
+
 
 ## 🚀 Instalação
 
@@ -153,10 +171,14 @@ A API passa a responder em `http://localhost:8000`. O frontend (em outro termina
 
 Backend e frontend têm um `Dockerfile` cada e o `docker-compose.yml` na raiz do repositório sobe os dois serviços juntos.
 
-| Serviço | Base | Porta | Comando de execução |
-| --- | --- | --- | --- |
-| `backend` | `php:8.4-cli` + Composer | `8000` | `php artisan serve --host=0.0.0.0 --port=8000` |
-| `frontend` | `node:22-alpine` | `4200` | `npm start -- --host 0.0.0.0` |
+
+| Serviço    | Base                     | Porta  | Comando de execução                            |
+| ---------- | ------------------------ | ------ | ---------------------------------------------- |
+| `backend`  | `php:8.4-cli` + Composer | `8000` | `php artisan serve --host=0.0.0.0 --port=8000` |
+| `frontend` | `node:22-alpine`         | `4200` | `npm start -- --host 0.0.0.0`                  |
+
+
+
 
 ### Preparação (uma única vez)
 
@@ -182,27 +204,35 @@ docker compose down              # para e remove os containers
 
 Com os serviços no ar:
 
-- Frontend: <http://localhost:4200>
-- API: <http://localhost:8000/api>
+- Frontend: [http://localhost:4200](http://localhost:4200)
+- API: [http://localhost:8000/api](http://localhost:8000/api)
+
+
 
 ### Como funciona
 
-| Item do `docker-compose.yml` | Função |
-| --- | --- |
-| `env_file: ./backend/.env` | Entrega as variáveis (incluindo `APP_KEY`) ao container. |
-| volume `database.sqlite` | Mantém o banco na sua máquina. Usuários e tarefas continuam existindo depois de `docker compose down`. |
-| volumes `oauth-*.key` (somente leitura) | Fornecem as chaves usadas pelo Passport para assinar os tokens. |
-| `depends_on: backend` | O frontend inicia depois do backend. |
+
+| Item do `docker-compose.yml`            | Função                                                                                                 |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `env_file: ./backend/.env`              | Entrega as variáveis (incluindo `APP_KEY`) ao container.                                               |
+| volume `database.sqlite`                | Mantém o banco na sua máquina. Usuários e tarefas continuam existindo depois de `docker compose down`. |
+| volumes `oauth-*.key` (somente leitura) | Fornecem as chaves usadas pelo Passport para assinar os tokens.                                        |
+| `depends_on: backend`                   | O frontend inicia depois do backend.                                                                   |
+
+
+
 
 ### Problemas comuns
 
-- **`port is already allocated`** — outro container ou processo usa a porta. Veja com `docker ps` ou `ss -ltnp | grep 8000` e pare o processo, ou troque o lado esquerdo do mapeamento (ex.: `"8001:8000"`).
+- `port is already allocated` — outro container ou processo usa a porta. Veja com `docker ps` ou `ss -ltnp | grep 8000` e pare o processo, ou troque o lado esquerdo do mapeamento (ex.: `"8001:8000"`).
 - **Cadastro funciona, mas o login falha** — confira se `backend/.env` existe e tem `APP_KEY`, se as duas chaves `oauth-*.key` estão em `backend/storage/` e veja o erro com `docker compose logs backend`.
 - **Mudei o código e nada mudou** — o código é copiado para a imagem no build. Rode `docker compose up --build` para reconstruir.
 
+
+
 ## 💾 Banco de dados e seed
 
-O projeto usa **SQLite** por padrão (`DB_CONNECTION=sqlite` em `.env.example`) — não é necessário subir um SGBD externo para o ambiente local. Se preferir MySQL, descomente e preencha o bloco `DB_*` no `.env` antes de rodar as migrations.
+O projeto usa **SQLite** por padrão (`DB_CONNECTION=sqlite` em `.env.example`) — não é necessário subir um SGBD externo para o ambiente local. Se preferir MySQL, descomente e preencha o bloco `DB_`* no `.env` antes de rodar as migrations.
 
 ```bash
 # Criar o arquivo do SQLite (somente na primeira vez, em SQLite)
@@ -217,50 +247,59 @@ php artisan db:seed
 
 O `DatabaseSeeder` cria um único usuário de teste:
 
-| Campo | Valor |
-| --- | --- |
-| `name` | `Test User` |
-| `email` | `test@example.com` |
-| `password` | `password` |
+
+| Campo      | Valor              |
+| ---------- | ------------------ |
+| `name`     | `Test User`        |
+| `email`    | `test@example.com` |
+| `password` | `password`         |
+
 
 > Não existe factory/seed de tarefas. Para popular manualmente, use `POST /api/tasks` autenticado, a tela de criação do frontend ou `php artisan tinker`.
 
-> **Chave primária de `users`:** a coluna se chama `user_id` (não `id`). O model `User` define `$primaryKey = 'user_id'` e `tasks.user_id` referencia essa coluna. Por isso as respostas da API trazem `user_id` nos objetos de usuário.
+> **Chave primária de** `users`**:** a coluna se chama `user_id` (não `id`). O model `User` define `$primaryKey = 'user_id'` e `tasks.user_id` referencia essa coluna. Por isso as respostas da API trazem `user_id` nos objetos de usuário.
+
+
 
 ## 🔐 Variáveis de ambiente
 
 Copie `.env.example` para `.env` e ajuste conforme necessário. Principais chaves:
 
-| Variável | Obrigatório | Descrição |
-| --- | --- | --- |
-| `APP_NAME` | sim | Nome exibido em logs e-mails. |
-| `APP_ENV` | sim | `local`, `production`, etc. |
-| `APP_KEY` | sim | Gerado por `php artisan key:generate`. |
-| `APP_DEBUG` | sim | `true` em dev, `false` em produção. |
-| `APP_URL` | sim | URL base do backend (ex.: `http://localhost:8000`). |
-| `APP_LOCALE` | recomendado | O `.env.example` vem com `en`. Use `pt_BR` para mensagens de validação em português (as traduções estão em `lang/pt_BR`). |
-| `DB_CONNECTION` | sim | `sqlite` (default) ou `mysql`. |
-| `DB_HOST` / `DB_PORT` / `DB_DATABASE` / `DB_USERNAME` / `DB_PASSWORD` | se MySQL | Credenciais do SGBD. |
-| `SESSION_DRIVER` | sim | Default do `.env.example`: `database`. |
-| `CACHE_STORE` | sim | Default: `database`. |
-| `QUEUE_CONNECTION` | sim | Default: `database` (pode ir para `sync` em dev). |
-| `LOG_CHANNEL` / `LOG_LEVEL` | sim | Stack de logs; default `stack` / `debug`. |
-| `MAIL_MAILER` | sim | `log` em dev — e-mails vão para `storage/logs`. |
-| `PASSPORT_PRIVATE_KEY` / `PASSPORT_PUBLIC_KEY` | produção | Conteúdo das chaves, usado no lugar dos arquivos `storage/oauth-*.key` (lidos em `config/passport.php`). |
+
+| Variável                                                              | Obrigatório | Descrição                                                                                                                 |
+| --------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `APP_NAME`                                                            | sim         | Nome exibido em logs e-mails.                                                                                             |
+| `APP_ENV`                                                             | sim         | `local`, `production`, etc.                                                                                               |
+| `APP_KEY`                                                             | sim         | Gerado por `php artisan key:generate`.                                                                                    |
+| `APP_DEBUG`                                                           | sim         | `true` em dev, `false` em produção.                                                                                       |
+| `APP_URL`                                                             | sim         | URL base do backend (ex.: `http://localhost:8000`).                                                                       |
+| `APP_LOCALE`                                                          | recomendado | O `.env.example` vem com `en`. Use `pt_BR` para mensagens de validação em português (as traduções estão em `lang/pt_BR`). |
+| `DB_CONNECTION`                                                       | sim         | `sqlite` (default) ou `mysql`.                                                                                            |
+| `DB_HOST` / `DB_PORT` / `DB_DATABASE` / `DB_USERNAME` / `DB_PASSWORD` | se MySQL    | Credenciais do SGBD.                                                                                                      |
+| `SESSION_DRIVER`                                                      | sim         | Default do `.env.example`: `database`.                                                                                    |
+| `CACHE_STORE`                                                         | sim         | Default: `database`.                                                                                                      |
+| `QUEUE_CONNECTION`                                                    | sim         | Default: `database` (pode ir para `sync` em dev).                                                                         |
+| `LOG_CHANNEL` / `LOG_LEVEL`                                           | sim         | Stack de logs; default `stack` / `debug`.                                                                                 |
+| `MAIL_MAILER`                                                         | sim         | `log` em dev — e-mails vão para `storage/logs`.                                                                           |
+| `PASSPORT_PRIVATE_KEY` / `PASSPORT_PUBLIC_KEY`                        | produção    | Conteúdo das chaves, usado no lugar dos arquivos `storage/oauth-*.key` (lidos em `config/passport.php`).                  |
+
 
 > O `php artisan passport:install` gera as chaves em `storage/oauth-private.key` e `storage/oauth-public.key` e cria os clients OAuth2. Reexecute o comando apenas se quiser rotacionar credenciais.
+
+
 
 ## 📡 Endpoints da API
 
 Base URL local: `http://localhost:8000/api`.
 
-| Exigem `Authorization: Bearer {token}` (`auth:api`) | Sem middleware de autenticação |
-| --- | --- |
-| `GET /`, `/tasks` (CRUD completo), `PUT /users`, `DELETE /users` | `POST /login`, `GET /users`, `POST /users`, `GET /stats`\*, `GET /service`, `POST /request` |
 
-\* `GET /stats` não tem o middleware, mas o controller lê o usuário pelo token (`auth('api')->id()`). Sem token válido a resposta é uma lista vazia.
+| Exigem `Authorization: Bearer {token}` (`auth:api`)              | Sem middleware de autenticação                                                            |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `GET /`, `/tasks` (CRUD completo), `PUT /users`, `DELETE /users`, `GET /stats` | `POST /login`, `GET /users`, `POST /users`, `GET /service`, `POST /request` |
 
 ### Autenticação
+
+
 
 #### `POST /login`
 
@@ -277,6 +316,7 @@ curl --location --request POST 'http://localhost:8000/api/login' \
 ```
 
 **200**
+
 ```json
 {
   "user": { "user_id": 1, "name": "Test User", "email": "test@example.com" },
@@ -285,9 +325,12 @@ curl --location --request POST 'http://localhost:8000/api/login' \
 ```
 
 **401**
+
 ```json
 { "message": "Credenciais inválidas" }
 ```
+
+
 
 #### `GET /` (rota interna, `auth:api`)
 
@@ -314,7 +357,7 @@ curl --location --request POST 'http://localhost:8000/api/tasks' \
   }'
 ```
 
-**Regras de validação (`StoreTaskRequest`)**
+**Regras de validação (**`StoreTaskRequest`**)**
 
 - `tarefa`: obrigatório, string, máx. 50 caracteres, **único** na tabela.
 - `descricao`: opcional, string, máx. 255 caracteres.
@@ -324,6 +367,7 @@ curl --location --request POST 'http://localhost:8000/api/tasks' \
 Em caso de falha, a API responde `422` no formato padrão do Laravel (`message` + `errors`), com as mensagens em português definidas no `FormRequest`.
 
 **200**
+
 ```json
 {
   "nova_tarefa": {
@@ -339,24 +383,27 @@ Em caso de falha, a API responde `422` no formato padrão do Laravel (`message` 
 }
 ```
 
+
+
 #### `GET /tasks`
 
 Lista paginada das tarefas do usuário, com filtros e ordenação.
 
 **Parâmetros de query**
 
-| Param | Tipo | Valores aceitos | Default |
-| --- | --- | --- | --- |
-| `per_page` | int | `10`, `20`, `25`, `50`, `100` | `10` |
-| `sort_by` | string | `id`, `tarefa`, `descricao`, `status`, `prioridade`, `created_at`, `updated_at`, `user.name` | — |
-| `sort_order` | string | `asc`, `desc` | — |
-| `filter_id` | int | — | — |
-| `filter_tarefa` | string | contém (LIKE) | — |
-| `filter_status` | string | `PENDENTE | EM_ANDAMENTO | CONCLUIDA` | — |
-| `filter_prioridade` | string | `BAIXA | MEDIA | ALTA` | — |
-| `filter_usuario` | string | validado, mas **ainda não aplicado** à consulta | — |
-| `filter_criado_em` | date | `YYYY-MM-DD` | — |
-| `filter_atualizado_em` | date | `YYYY-MM-DD` | — |
+
+| Param                  | Tipo   | Valores aceitos                                                                              | Default      |
+| ---------------------- | ------ | -------------------------------------------------------------------------------------------- | ------------ |
+| `per_page`             | int    | `10`, `20`, `25`, `50`, `100`                                                                | `10`         |
+| `sort_by`              | string | `id`, `tarefa`, `descricao`, `status`, `prioridade`, `created_at`, `updated_at`, `user.name` | —            |
+| `sort_order`           | string | `asc`, `desc`                                                                                | —            |
+| `filter_id`            | int    | —                                                                                            | —            |
+| `filter_tarefa`        | string | contém (LIKE)                                                                                | —            |
+| `filter_status`        | string | `PENDENTE                                                                                    | EM_ANDAMENTO |
+| `filter_prioridade`    | string | `BAIXA                                                                                       | MEDIA        |
+| `filter_criado_em`     | date   | `YYYY-MM-DD`                                                                                 | —            |
+| `filter_atualizado_em` | date   | `YYYY-MM-DD`                                                                                 | —            |
+
 
 ```bash
 curl --location --request GET 'http://localhost:8000/api/tasks?per_page=20&filter_status=PENDENTE&sort_by=user.name&sort_order=asc' \
@@ -365,6 +412,7 @@ curl --location --request GET 'http://localhost:8000/api/tasks?per_page=20&filte
 ```
 
 **200**
+
 ```json
 {
   "tarefas:": {
@@ -397,6 +445,8 @@ curl --location --request GET 'http://localhost:8000/api/tasks?per_page=20&filte
 }
 ```
 
+
+
 #### `GET /tasks/{id}`
 
 Detalhe de uma tarefa do usuário autenticado. `404` quando não encontrada.
@@ -408,6 +458,7 @@ curl --location --request GET 'http://localhost:8000/api/tasks/1' \
 ```
 
 **200**
+
 ```json
 {
   "tarefa selecionada:": {
@@ -425,9 +476,12 @@ curl --location --request GET 'http://localhost:8000/api/tasks/1' \
 ```
 
 **404**
+
 ```json
 { "message": "No query results for model [App\\Models\\Task] {id}" }
 ```
+
+
 
 #### `PUT /tasks/{id}`
 
@@ -447,6 +501,7 @@ curl --location --request PUT 'http://localhost:8000/api/tasks/1' \
 ```
 
 **200**
+
 ```json
 {
   "tarefa atualizada": {
@@ -463,6 +518,8 @@ curl --location --request PUT 'http://localhost:8000/api/tasks/1' \
 }
 ```
 
+
+
 #### `DELETE /tasks/{id}`
 
 Hard delete. Retorna a tarefa removida. `404` quando não encontrada.
@@ -474,6 +531,7 @@ curl --location --request DELETE 'http://localhost:8000/api/tasks/1' \
 ```
 
 **200**
+
 ```json
 {
   "tarefa excluída": {
@@ -490,9 +548,11 @@ curl --location --request DELETE 'http://localhost:8000/api/tasks/1' \
 }
 ```
 
+
+
 ### Usuários (`/users`)
 
-`GET` e `POST` são abertos (o `POST` é usado pela tela de cadastro). `PUT` e `DELETE` estão sob `auth:api` e atuam sempre sobre o **usuário dono do token**, sem receber id na URL. **O `GET /users` expõe todos os usuários e deve ser protegido ou removido antes de ir para produção.**
+`GET` e `POST` são abertos (o `POST` é usado pela tela de cadastro). `PUT` e `DELETE` estão sob `auth:api` e atuam sempre sobre o **usuário dono do token**, sem receber id na URL. **O** `GET /users` **expõe todos os usuários e deve ser protegido ou removido antes de ir para produção.**
 
 #### `GET /users`
 
@@ -504,9 +564,12 @@ curl --location --request GET 'http://localhost:8000/api/users' \
 ```
 
 **200**
+
 ```json
 { "usuários": [ { "user_id": 1, "name": "Test User", "email": "test@example.com" } ] }
 ```
+
+
 
 #### `POST /users`
 
@@ -524,6 +587,7 @@ curl --location --request POST 'http://localhost:8000/api/users' \
 ```
 
 **200**
+
 ```json
 { "usuário criado": { "name": "Fulano", "email": "fulano@example.com", "user_id": 2 } }
 ```
@@ -546,14 +610,18 @@ curl --location --request PUT 'http://localhost:8000/api/users' \
 ```
 
 **200**
+
 ```json
 { "usuário atualizado": { "user_id": 2, "name": "Novo Nome", "email": "fulano@example.com" } }
 ```
 
 **401**
+
 ```json
 { "message": "Senha incorreta." }
 ```
+
+
 
 #### `DELETE /users` (`auth:api`)
 
@@ -566,13 +634,16 @@ curl --location --request DELETE 'http://localhost:8000/api/users' \
 ```
 
 **200**
+
 ```json
 { "usuário deletado": "Fulano" }
 ```
 
+
+
 ### Estatísticas (`/stats`)
 
-Devolve a contagem de tarefas por status do usuário identificado pelo token (`StatsController@getStatsByUser`). A rota não tem o middleware `auth:api`, mas o filtro usa `auth('api')->id()`: sem token válido o resultado é uma lista vazia. O frontend usa esta resposta para montar o gráfico da barra lateral.
+Devolve a contagem de tarefas por status do usuário identificado pelo token (`StatsController@getStatsByUser`). A rota está sob `auth:api`: sem token válido a resposta é 401. O frontend usa esta resposta para montar o gráfico da barra lateral.
 
 ```bash
 curl --location --request GET 'http://localhost:8000/api/stats' \
@@ -581,6 +652,7 @@ curl --location --request GET 'http://localhost:8000/api/stats' \
 ```
 
 **200**
+
 ```json
 [
   {
@@ -596,6 +668,8 @@ curl --location --request GET 'http://localhost:8000/api/stats' \
 
 > O `StatsController` também tem o método `getStats` (totais gerais de todas as tarefas), mas ele não está ligado a nenhuma rota.
 
+
+
 ### Rotas auxiliares (estudo / playground)
 
 - `GET /service` — endpoint do `DIController` que exercita **injeção de dependência** com `App\services\TaskService`. Útil para validar o container.
@@ -603,24 +677,30 @@ curl --location --request GET 'http://localhost:8000/api/stats' \
 
 > Documentação OpenAPI/Swagger ainda não está publicada — ver [melhorias futuras](#melhorias-futuras).
 
+
+
 ## 🌿 Fluxo Git
 
 O repositório adota **Conventional Commits** para mensagens e **feature branches** para integrar o trabalho.
 
-| Branch | Papel |
-| --- | --- |
-| `main` | Branch estável, destino dos Pull Requests. |
-| `develop` | Branch de integração do desenvolvimento diário. |
-| `feat/*` | Branches de funcionalidades (ex.: `feat/redis-cache`). |
 
-| Tipo de commit | Quando usar |
-| --- | --- |
-| `feat` | Nova funcionalidade (ex.: `feat: botão de logout`). |
-| `fix` | Correção de bug (ex.: `fix: correção do bug onde os filtros eram ativados pelos controles de paginação`). |
-| `style` | Mudança visual que não altera comportamento (ex.: `style: tabela centralizada`). |
-| `refactor` | Reorganização interna sem mudar contrato. |
-| `docs` | Mudanças apenas na documentação. |
-| `chore` | Tarefas de manutenção (deps, configs, CI). |
+| Branch    | Papel                                                  |
+| --------- | ------------------------------------------------------ |
+| `main`    | Branch estável, destino dos Pull Requests.             |
+| `develop` | Branch de integração do desenvolvimento diário.        |
+| `feat/*`  | Branches de funcionalidades (ex.: `feat/redis-cache`). |
+
+
+
+| Tipo de commit | Quando usar                                                                                               |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| `feat`         | Nova funcionalidade (ex.: `feat: botão de logout`).                                                       |
+| `fix`          | Correção de bug (ex.: `fix: correção do bug onde os filtros eram ativados pelos controles de paginação`). |
+| `style`        | Mudança visual que não altera comportamento (ex.: `style: tabela centralizada`).                          |
+| `refactor`     | Reorganização interna sem mudar contrato.                                                                 |
+| `docs`         | Mudanças apenas na documentação.                                                                          |
+| `chore`        | Tarefas de manutenção (deps, configs, CI).                                                                |
+
 
 **Fluxo padrão:**
 
@@ -635,41 +715,48 @@ O repositório adota **Conventional Commits** para mensagens e **feature branche
 0bc8a3f Merge pull request #1 from Guilh3rme-August0-bs/primeng
 ```
 
+
+
 ## 💡 Decisões técnicas, limitações e melhorias
+
+
 
 ### Decisões técnicas
 
 - **OAuth2 Password Grant via Passport** — apropriado para um cliente SPA próprio. Para integrações com terceiros, expanda para *Authorization Code* + PKCE.
-- **SQLite como default de desenvolvimento** — zero infra para rodar localmente; MySQL continua disponível descomentando o bloco `DB_*` no `.env`.
+- **SQLite como default de desenvolvimento** — zero infra para rodar localmente; MySQL continua disponível descomentando o bloco `DB_`* no `.env`.
 - **Hard delete em tarefas** — simples e suficiente para o escopo atual; troca para soft delete é uma migration simples.
-- **Eager loading com `select('user_id','name')`** no relacionamento `user` — evita N+1 e reduz o payload.
-- **Chave primária `user_id` em `users`** — o model `User` define `$primaryKey = 'user_id'` e a relação com `tasks` usa essa coluna nos dois lados.
+- **Eager loading com** `select('user_id','name')` no relacionamento `user` — evita N+1 e reduz o payload.
+- **Chave primária** `user_id` **em** `users` — o model `User` define `$primaryKey = 'user_id'` e a relação com `tasks` usa essa coluna nos dois lados.
 - **Escopo por usuário no controller** — `Task::where('user_id', auth('api')->id())` em todas as operações sensíveis.
-- **Validação com `FormRequest`** — `StoreTaskRequest` e `UpdateTaskRequest` concentram regras e mensagens em português. `index`, `UserController` e `RequestController` ainda usam `Validator::make` inline.
+- **Validação com** `FormRequest` — `StoreTaskRequest` e `UpdateTaskRequest` concentram regras e mensagens em português. `index`, `UserController` e `RequestController` ainda usam `Validator::make` inline.
 - **Estatísticas por SQL agregado** — `StatsController` usa `COUNT(CASE WHEN ...)` em uma única consulta, em vez de carregar as tarefas em memória.
 - **Cache de leituras no frontend** — `ApiService` guarda `GET /tasks` e `GET /stats` com `shareReplay` e invalida o cache a cada operação que altera dados.
 - **Locale** — as traduções `pt_BR` estão em `lang/`, mas o `.env.example` define `APP_LOCALE=en`. Ajuste o `.env` para usá-las.
 - **Frontend standalone (Angular 21) + PrimeNG + Tailwind v4** — componentes prontos (table, paginator, modal, toast) aceleram a entrega sem abrir mão de customização visual. Chart.js exibe as estatísticas.
 - **Docker Compose para desenvolvimento** — um comando sobe backend e frontend (ver [Executando com Docker](#-executando-com-docker)).
 
+
+
 ### Limitações conhecidas
 
 - **Sem OpenAPI/Swagger** — a documentação de endpoints é manual e vive apenas neste README.
 - **Docker voltado a desenvolvimento** — o `docker-compose.yml` sobe `php artisan serve` e `ng serve`, sem hot reload (o código é copiado no build) e sem serviço de banco separado (SQLite via volume). Não é uma configuração de produção.
 - **Imagem do backend leva arquivos locais** — o `backend/.dockerignore` não exclui `database/*.sqlite` nem `storage/*.key`, então o `COPY . .` os copia para a imagem (os volumes os sobrepõem em tempo de execução). Adicione esses padrões ao `.dockerignore` antes de publicar a imagem.
-- **Endpoints sem `auth:api`** — `GET /users` lista todos os usuários, `POST /users` é aberto (necessário para o cadastro), e `/stats`, `/service` e `/request` não têm middleware. Proteja ou remova os que não forem necessários antes de expor a API.
+- **Endpoints sem** `auth:api` — `GET /users` lista todos os usuários, `POST /users` é aberto (necessário para o cadastro), e `/service` e `/request` não têm middleware. Proteja ou remova os que não forem necessários antes de expor a API.
 - **URL da API fixa no frontend** — `api-service.ts` usa `http://localhost:8000/api` em todas as chamadas, sem arquivo de ambiente. Para outro host é preciso editar o código.
-- **`filter_usuario` sem efeito** — o parâmetro é validado em `GET /tasks`, mas não filtra a consulta.
-- **`StatsController@getStats` sem rota** — o método de totais gerais existe, mas só `getStatsByUser` está ligado em `/stats`.
+- `StatsController@getStats` **sem rota** — o método de totais gerais existe, mas só `getStatsByUser` está ligado em `/stats`.
 - **Cache do frontend em memória** — é perdido ao recarregar a página.
 - **Sanctum instalado, mas sem uso** — `laravel/sanctum` está no `composer.json`; a autenticação das rotas usa apenas Passport (`auth:api`).
 - **Sem refresh token rotation** configurado — apenas access tokens Password Grant.
 - **Sem soft delete** — `DELETE /tasks/{id}` é hard delete.
-- **`tarefa` é globalmente única** (não escopada por usuário) — pode gerar conflito de nomes entre contas distintas.
+- `tarefa` **é globalmente única** (não escopada por usuário) — pode gerar conflito de nomes entre contas distintas.
 - **Sem factory/seed de tarefas** — apenas o `UserFactory` é populado pelo `DatabaseSeeder`.
 - **Cobertura de testes** — a suíte do backend tem apenas os testes de exemplo (`ExampleTest`, `CacheSystemTest`). Não há testes para os endpoints de tasks/users/stats.
 - **Validação inline remanescente** — `index`, `UserController` e `RequestController` ainda não usam `FormRequest`.
 - **Sem API Resources** — as respostas devolvem o model cru dentro de chaves descritivas (`nova_tarefa`, `tarefas:`, etc.).
+
+
 
 ### Melhorias futuras
 
@@ -681,18 +768,21 @@ O repositório adota **Conventional Commits** para mensagens e **feature branche
 6. **Factory e seed de tarefas** — popular dados de exemplo por usuário.
 7. **Cobertura Pest** — testes de feature para `auth`, `tasks` (incluindo ownership), `users` e `stats`.
 8. **URL da API por ambiente** — mover `http://localhost:8000/api` para os arquivos de environment do Angular.
-9. **Corrigir `filter_usuario`** e proteger `GET /users` e `/stats` com `auth:api`.
+9. **Proteger** `GET /users` com `auth:api`.
 10. **Rate limiting** — `throttle:api` + `throttle:login` para mitigar brute force.
 11. **API Resources** — padronizar envelopes de resposta (`data`, `meta`, `errors`).
 12. **CI no GitHub Actions** — pipeline com `composer install`, `pint --test`, `php artisan test`.
 
+
+
 ## 🔗 Links úteis
 
-- **Repositório:** <https://github.com/Guilh3rme-August0-bs/laravel-task-management-api>
+- **Repositório:** [https://github.com/Guilh3rme-August0-bs/laravel-task-management-api](https://github.com/Guilh3rme-August0-bs/laravel-task-management-api)
 - **PR #1 (referência de fluxo):** [Merge pull request #1 from Guilh3rme-August0-bs/primeng](https://github.com/Guilh3rme-August0-bs/laravel-task-management-api/pull/1)
-- **Laravel:** <https://laravel.com/docs>
-- **Laravel Passport:** <https://laravel.com/docs/passport>
-- **Pest:** <https://pestphp.com>
-- **Documentação OpenAPI (referência para evolução):** <https://swagger.io/specification/>
+- **Laravel:** [https://laravel.com/docs](https://laravel.com/docs)
+- **Laravel Passport:** [https://laravel.com/docs/passport](https://laravel.com/docs/passport)
+- **Pest:** [https://pestphp.com](https://pestphp.com)
+- **Documentação OpenAPI (referência para evolução):** [https://swagger.io/specification/](https://swagger.io/specification/)
 
 > **Status de deploy:** esta API ainda não está publicada em ambiente público. Os links acima apontam para o repositório e o PR de referência; URLs de staging/produção serão adicionadas aqui assim que o deploy for provisionado.
+
