@@ -23,7 +23,6 @@ class TaskController extends Controller
             'filter_tarefa' => ['nullable', 'string'],
             'filter_status' => ['nullable', 'string', 'in:PENDENTE,EM_ANDAMENTO,CONCLUIDA'],
             'filter_prioridade' => ['nullable', 'string', 'in:BAIXA,MEDIA,ALTA'],
-            'filter_usuario' => ['nullable', 'string'],
             'filter_criado_em' => ['nullable', 'date'],
             'filter_atualizado_em' => ['nullable', 'date'],
         ]);
