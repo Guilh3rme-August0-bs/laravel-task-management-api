@@ -45,7 +45,7 @@ Route::post('users', [UserController::class, 'createUser']);
 Route::put('users', [UserController::class, 'updateUsername'])->middleware('auth:api');
 Route::delete('users', [UserController::class, 'deleteUser'])->middleware('auth:api');
 
-Route::get('stats', [StatsController::class, 'getStatsByUser']);
+Route::get('stats', [StatsController::class, 'getStatsByUser'])->middleware('auth:api');
 
 // rota para testar HTTP requests
 Route::post('request', [RequestController::class, 'takeReqData']);
