@@ -1,25 +1,25 @@
 <div class="filter-grid mb-1 bg-zinc-900 p-4 rounded-t-md">
-    <div class="filter-cell flex flex-col" style="min-width: 1rem">
+    <div class="filter-cell flex flex-col" style="max-width: 5vw">
         <label for="id">ID</label>
         <input pInputText type="number" id="id" [(ngModel)]="filters.id" />
     </div>
-    <div class="filter-cell flex flex-col" style="min-width: 20rem">
+    <div class="filter-cell flex flex-col" style="min-width: 23vw">
         <label for="tarefa">Tarefa</label>
         <input pInputText id="tarefa" [(ngModel)]="filters.tarefa" />
     </div>
-    <div class="filter-cell flex flex-col" style="min-width: 13rem">
+    <div class="filter-cell flex flex-col" style="min-width: 13vw">
         <label for="status">Status</label>
         <p-select id="status" [(ngModel)]="filters.status" [options]="statusOptions" placeholder="Selecione" [showClear]="true" class="w-full" />
     </div>
-    <div class="filter-cell flex flex-col" style="min-width: 10rem">
+    <div class="filter-cell flex flex-col" style="min-width: 10vw">
         <label for="prioridade">Prioridade</label>
         <p-select id="prioridade" [(ngModel)]="filters.prioridade" [options]="prioridadeOptions" placeholder="Selecione" [showClear]="true" class="w-full" />
     </div>
-    <div class="filter-cell flex flex-col" style="min-width: 12rem">
+    <div class="filter-cell flex flex-col" style="min-width: 12vw">
         <label for="criado_em">Criado em</label>
         <p-datepicker id="criado_em" [(ngModel)]="filters.criado_em" dateFormat="dd/mm/yy" [showIcon]="true" placeholder="Selecione uma data" class="w-full" />
     </div>
-    <div class="filter-cell flex flex-col" style="min-width: 12rem">
+    <div class="filter-cell flex flex-col" style="min-width: 12vw">
         <label for="atualizado_em">Atualizado em</label>
         <p-datepicker id="atualizado_em" [(ngModel)]="filters.atualizado_em" dateFormat="dd/mm/yy" [showIcon]="true" placeholder="Selecione uma data" class="w-full" />
     </div>
