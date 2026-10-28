@@ -79,7 +79,7 @@ class TaskController extends Controller
         $task = $query->paginate($request->per_page ?? 10);
 
         return response()->json([
-            'tarefas:' => $task,
+            'tarefas' => $task,
         ]);
     }
 
@@ -108,7 +108,7 @@ class TaskController extends Controller
             ->findOrFail($id);
 
         return response()->json([
-            'tarefa selecionada:' => $task,
+            'tarefa selecionada' => $task,
         ]);
     }
 
