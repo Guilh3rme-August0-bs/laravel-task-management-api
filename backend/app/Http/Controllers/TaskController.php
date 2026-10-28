@@ -33,32 +33,32 @@ class TaskController extends Controller
             ], 422);
         }
 
-        $query = Task::where('user_id', auth('api')->id())
+        $query = Task::where('tasks.user_id', auth('api')->id())
             ->with('user');
 
         // Aplicar filtros
         if ($request->filled('filter_id')) {
-            $query->where('id', $request->filter_id);
+            $query->where('tasks.id', $request->filter_id);
         }
 
         if ($request->filled('filter_tarefa')) {
-            $query->where('tarefa', 'like', '%'.$request->filter_tarefa.'%');
+            $query->where('tasks.tarefa', 'like', '%'.$request->filter_tarefa.'%');
         }
 
         if ($request->filled('filter_status')) {
-            $query->where('status', $request->filter_status);
+            $query->where('tasks.status', $request->filter_status);
         }
 
         if ($request->filled('filter_prioridade')) {
-            $query->where('prioridade', $request->filter_prioridade);
+            $query->where('tasks.prioridade', $request->filter_prioridade);
         }
 
         if ($request->filled('filter_criado_em')) {
-            $query->whereDate('created_at', $request->filter_criado_em);
+            $query->whereDate('tasks.created_at', $request->filter_criado_em);
         }
 
         if ($request->filled('filter_atualizado_em')) {
-            $query->whereDate('updated_at', $request->filter_atualizado_em);
+            $query->whereDate('tasks.updated_at', $request->filter_atualizado_em);
         }
 
         // Aplicar ordenação
@@ -72,7 +72,7 @@ class TaskController extends Controller
                     ->orderBy('users.name', $sortOrder)
                     ->select('tasks.*');
             } else {
-                $query->orderBy($sortBy, $sortOrder);
+                $query->orderBy('tasks.'.$sortBy, $sortOrder);
             }
         }
 
