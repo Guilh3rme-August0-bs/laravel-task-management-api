@@ -121,7 +121,7 @@ class TaskController extends Controller
             ->with('user')
             ->findOrFail($id);
 
-        $task->update($request->all());
+        $task->update($request->validated());
 
         return response()->json([
             'tarefa atualizada' => $task,
