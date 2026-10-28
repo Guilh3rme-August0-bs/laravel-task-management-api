@@ -97,8 +97,8 @@ export class TablePrime implements OnInit {
       Object.keys(activeFilters).length > 0 ? activeFilters : undefined
     ).subscribe({
       next: (res: any) => {
-        this.data.set(res['tarefas:'].data);
-        this.totalRecords.set(res['tarefas:'].total);
+        this.data.set(res['tarefas'].data);
+        this.totalRecords.set(res['tarefas'].total);
         this.loading.set(false);
       },
       error: (err: any) => {
