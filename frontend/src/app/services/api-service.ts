@@ -34,11 +34,7 @@ export class ApiService {
   }
 
   changeUsername(newUsername: string, password: string) {
-    return this.http.put(`http://localhost:8000/api/users`, { newUsername, password }, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }).pipe(
+    return this.http.put(`http://localhost:8000/api/users`, { newUsername, password }).pipe(
       map(response => {
         this.clearTasksCache();
         this.clearStatsCache();
@@ -48,11 +44,7 @@ export class ApiService {
   }
 
   deleteAccount() {
-    return this.http.delete(`http://localhost:8000/api/users`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+    return this.http.delete(`http://localhost:8000/api/users`);
   }
 
   getTasks(page: number, perPage: number, sortField?: string, sortOrder?: string, filters?: any): Observable<any> {
@@ -73,11 +65,7 @@ export class ApiService {
 
     // Verificar se a requisição já está em cache
     if (!this.cacheMap.has(url)) {
-      const request$ = this.http.get(url, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      }).pipe(
+      const request$ = this.http.get(url).pipe(
         // shareReplay(1) faz cache da resposta e compartilha entre os subscribers
         shareReplay(1)
       );
@@ -88,11 +76,7 @@ export class ApiService {
   }
 
   createTask(task: any) {
-    return this.http.post('http://localhost:8000/api/tasks', task, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }).pipe(
+    return this.http.post('http://localhost:8000/api/tasks', task).pipe(
       map(response => {
         this.clearTasksCache();
         this.clearStatsCache();
@@ -102,11 +86,7 @@ export class ApiService {
   }
 
   updateTask(task: any) {
-    return this.http.put(`http://localhost:8000/api/tasks/${task.id}`, task, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }).pipe(
+    return this.http.put(`http://localhost:8000/api/tasks/${task.id}`, task).pipe(
       map(response => {
         this.clearTasksCache();
         this.clearStatsCache();
@@ -116,11 +96,7 @@ export class ApiService {
   }
 
   deleteTask(id: number) {
-    return this.http.delete(`http://localhost:8000/api/tasks/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }).pipe(
+    return this.http.delete(`http://localhost:8000/api/tasks/${id}`).pipe(
       map(response => {
         this.clearTasksCache(); 
         this.clearStatsCache();
@@ -134,11 +110,7 @@ export class ApiService {
   
     // Verificar se a requisição já está em cache
     if (!this.cacheMap.has(url)) {
-      const request$ = this.http.get(url, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      }).pipe(
+      const request$ = this.http.get(url).pipe(
         shareReplay(1)
       );
       this.cacheMap.set(url, request$);
